@@ -27,7 +27,7 @@ Për këtë version provues, udhëtimet mund të jenë të parapërgatitura.
 
 ## 6. Si e provoj?
 - Kur zgjedh një udhëtim me vende të lira dhe shtyp “Kërko një vend”, duhet të regjistrohet vetëm një kërkesë dhe të hapet ekrani “Kërkesa në pritje” me udhëtimin e saktë. Shtypja e përsëritur nuk duhet të krijojë kërkesa të dyfishta.
-- Nëse nuk ka vende të lira, duhet të shfaqet mesazhi “Nuk ka vende të lira” dhe butoni i kërkesës duhet të jetë i çaktivizuar. Nëse vendi i fundit është zënë ndërkohë, aplikacioni duhet ta kontrollojë sërish disponueshmërinë gjatë dërgimit dhe të mos e regjistrojë kërkesën.
+- Nëse nuk ka vende të lira, duhet të shfaqet mesazhi “Nuk ka vende të lira” dhe butoni i kërkesës duhet të jetë i çaktivizuar. Nëse vendi i fundit është zënë ndërkohë, aplikacioni duhet ta kontrollojë sërish  disponueshmërinë gjatë dërgimit dhe të mos e regjistrojë kërkesën.
 
 ## 7. Prova me kolegun
 
