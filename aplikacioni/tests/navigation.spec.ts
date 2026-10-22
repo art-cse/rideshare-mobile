@@ -1,8 +1,7 @@
 import { test, expect } from "@playwright/test";
 
-test.use({ viewport: { width: 375, height: 812 } });
-test("lista, detajet, simulimi dhe rastet kufitare në 375px", async ({ page }) => {
-  await page.goto("http://localhost:3000");
+test("lista, detajet, simulimi dhe rastet kufitare në pamjen e telefonit", async ({ page }) => {
+  await page.goto("/");
   await expect(page.locator(".trip-card")).toHaveCount(3);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   const links = page.getByRole("link", { name: "Shiko detajet" });
@@ -19,12 +18,12 @@ test("lista, detajet, simulimi dhe rastet kufitare në 375px", async ({ page }) 
   await expect(page).toHaveURL(/\/udhetimi\/2$/);
   await page.getByRole("link", { name: /Kthehu te lista/ }).click();
   await expect(page.locator(".trip-card")).toHaveCount(3);
-  await page.goto("http://localhost:3000/udhetimi/3");
+  await page.goto("/udhetimi/3");
   await expect(page.getByRole("button", { name: "Nuk ka vende të lira" })).toBeDisabled();
-  await page.goto("http://localhost:3000/udhetimi/3/kerkesa");
+  await page.goto("/udhetimi/3/kerkesa");
   await expect(page.getByRole("heading", { name: "Nuk ka vende të lira" })).toBeVisible();
   for (const path of ["/udhetimi/99", "/udhetimi/99/kerkesa"]) {
-    await page.goto(`http://localhost:3000${path}`);
+    await page.goto(path);
     await expect(page.getByRole("heading", { name: "Udhëtimi nuk u gjet" })).toBeVisible();
     await expect(page.getByRole("link", { name: "Kthehu te lista" })).toBeVisible();
   }

@@ -24,4 +24,8 @@ Të përsëriten të njëjtat prova kundër Neon pas konfigurimit, si dhe në te
 
 ## Ku gjendet puna
 
-https://github.com/art-cse/rideshare-mobile — kodi te aplikacioni/src/app, aplikacioni/src/components/KartaUdhetimi.tsx dhe aplikacioni/src/lib/udhetimet.ts. Raporti qëndron në rrënjë; nuk është bërë push ose dorëzim nga kjo punë.
+https://github.com/art-cse/rideshare-mobile — kodi te aplikacioni/src/app, aplikacioni/src/components/KartaUdhetimi.tsx dhe aplikacioni/src/lib/udhetimet.ts. Raporti qëndron në rrënjë; kodi është dërguar në GitHub; dorëzimi i kursit nuk është kryer.
+
+## Verifikimi i prodhimit · 22.10.2026
+
+https://rideshare-mobile-five.vercel.app u hap pa llogari Vercel (HTTP 200). Provat e navigimit u ekzekutuan kundër URL-së reale në Edge me viewport 375×844 dhe 390×844. Të dyja dështuan te lista: priteshin tri karta, u gjetën zero dhe mesazhi i gabimit të databazës. Rezultatet e mëparshme me të dhëna fikse mbeten vetëm prova historike. Detajet, simulimi dhe ID 99 në prodhim me Neon nuk janë provuar ende. Nuk u krye provë në telefon fizik.

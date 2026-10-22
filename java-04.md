@@ -24,8 +24,12 @@ Pritej: gabim i qartë kur mungon DATABASE_URL dhe rikuperim pas rikthimit. U v�
 
 https://github.com/art-cse/rideshare-mobile
 
-SQL: aplikacioni/schema.sql. Kodi: src/lib/db.ts, src/lib/udhetimet.ts dhe tri faqet te aplikacioni/src/app. Paketat dhe lockfile janë te aplikacioni/. Verifikimi i SQL-së gjendet te aplikacioni/tests/lejet.test.ts. Nuk ka URL publikimi.
+SQL: aplikacioni/schema.sql. Kodi: src/lib/db.ts, src/lib/udhetimet.ts dhe tri faqet te aplikacioni/src/app. Paketat dhe lockfile janë te aplikacioni/. Verifikimi i SQL-së gjendet te aplikacioni/tests/lejet.test.ts. Produksioni: https://rideshare-mobile-five.vercel.app (publik, por pa lidhje Neon funksionale).
 
 ## Çfarë mbetet për përmirësim
 
 Të lidhet Neon, të kryhen tri provat reale dhe të rikontrollohen 3/99. Navigimi 3/99 kaloi në Javën 3 para migrimit; rreshti i panjohur u kontrollua edhe në PGlite. Kërkesa “Në pritje” mbetet simulim; nuk ka rezervim real. Pas provave të dokumentohen rezultatet e vërejtura dhe të përgatitet dorëzimi.
+
+## Verifikimi i prodhimit · 22.10.2026
+
+https://rideshare-mobile-five.vercel.app u hap pa llogari Vercel (HTTP 200). DATABASE_URL mungon në konfigurimin lokal dhe në listën e variablave Vercel. Në URL-në publike u vërejt gabimi i databazës në listë, detaje dhe kërkesë në 375px/390px; nuk u shfaqën të dhëna rezervë. Nuk u shkaktua artificialisht dështim në prodhim. Ndryshimi 08:25/rikthimi, WHERE false lokalisht dhe rikuperimi pas konfigurimit mbeten të paprovuara. Nuk është kontrolluar një databazë reale ose pronësia reale.

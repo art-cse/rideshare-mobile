@@ -24,10 +24,14 @@ Pritej: ndryshimi i hidden id nga 2 në 1 refuzohet dhe 1 mbetet 08:00 në Neon.
 
 https://github.com/art-cse/rideshare-mobile
 
-Skedarët: aplikacioni/schema-java05.sql, src/lib/auth.ts, src/lib/lejet.ts, src/types/next-auth.d.ts, src/components/Hyrja.tsx, src/app/api/auth/[...nextauth]/route.ts dhe src/app/panel/{actions.ts,page.tsx}. Lista ruan hyrjen publike. Nuk ka publikim në Vercel.
+Skedarët: aplikacioni/schema-java05.sql, src/lib/auth.ts, src/lib/lejet.ts, src/types/next-auth.d.ts, src/components/Hyrja.tsx, src/app/api/auth/[...nextauth]/route.ts dhe src/app/panel/{actions.ts,page.tsx}. Lista ruan hyrjen publike. Produksioni: https://rideshare-mobile-five.vercel.app (publik, por integrimet mbeten të pakonfiguruara).
 
 Kontrollet lokale: ESLint, TypeScript dhe build kaluan. Nëntë teste Vitest me PGlite/sesione mock kaluan. Prova e shfletuesit për panelin pa hyrje dhe gabimin e lidhjes kaloi në Edge në 375px. Sekreti i sesionit u gjenerua lokalisht pa shfaqje; .env.local është i përjashtuar nga Git.
 
 ## Çfarë mbetet për përmirësim
 
-Të futen kredencialet vetëm në .env.local, të ekzekutohen të dy SQL-të në Neon dhe të kryhen tri provat reale. Kërkesa për vend mbetet simulim. Hapi i ardhshëm është verifikimi dhe dokumentimi i integrimit; nuk janë shtuar rezervime, pagesa ose funksione të javëve të mëvonshme. Nuk është kryer push, publikim ose dorëzim.
+Të futen kredencialet vetëm në .env.local, të ekzekutohen të dy SQL-të në Neon dhe të kryhen tri provat reale. Kërkesa për vend mbetet simulim. Hapi i ardhshëm është verifikimi dhe dokumentimi i integrimit; nuk janë shtuar rezervime, pagesa ose funksione të javëve të mëvonshme. Kodi është dërguar në GitHub dhe publikuar në Vercel; dorëzimi i kursit nuk është kryer.
+
+## Verifikimi i prodhimit · 22.10.2026
+
+https://rideshare-mobile-five.vercel.app u hap pa llogari Vercel (HTTP 200). Vercel ka NEXTAUTH_SECRET dhe NEXTAUTH_URL të prodhimit; mungojnë GITHUB_ID/GITHUB_SECRET dhe DATABASE_URL. Paneli publik pa hyrje dhe mungesa e formularit u verifikuan në 375px/390px. Hyrja GitHub, rifreskimi i sesionit, dalja dhe shkrimet e autorizuara/pa leje në Neon nuk janë provuar ende. Nuk ka ID GitHub të verifikuar nga një hyrje reale në këtë aplikacion. Nëntë teste të izoluara kaluan sërish; ato nuk provojnë integrimin real.

@@ -1,5 +1,9 @@
 # rideshare-mobile
 
+**Produksioni:** https://rideshare-mobile-five.vercel.app
+
+**Gjendja e verifikuar më 22.10.2026:** URL-ja hapet publikisht pa llogari Vercel, por aplikacioni ende nuk është gati për demonstrim. Lista shfaq gabim lidhjeje: DATABASE_URL mungon lokalisht dhe në Vercel. Mungojnë edhe GITHUB_ID/GITHUB_SECRET. NEXTAUTH_SECRET dhe NEXTAUTH_URL të prodhimit ekzistojnë dhe janë ruajtur pa rotacion.
+
 Aplikacioni i përbashkët RideShare për laboratorët AAB, Javët 3–5. Nuk është projekti individual i biznesit. Ndërfaqja është në shqip; kërkesat për vend mbeten simulim, pa rezervime reale.
 
 Repository: https://github.com/art-cse/rideshare-mobile
@@ -38,7 +42,7 @@ Mos përdor `NEXT_PUBLIC_` për sekrete. Mos i fut në kod, raporte, fotografi o
 
 ## Neon dhe SQL
 
-Rruga e preferuar e kursit: në Vercel Storage/Marketplace zgjidh Neon, planin Free dhe emrin `rideshare-java4`, pastaj Connect Project. Përdor të njëjtën degë gjatë laboratorit; shmang degët automatike për çdo deployment. Alternativë: krijoje drejtpërdrejt në Neon Console dhe kopjo Connection string në `.env.local`. Konfigurimi i llogarisë dhe krijimi i burimeve bëhen nga pronari; nuk janë kryer këtu.
+Rruga e preferuar e kursit: në Vercel Storage/Marketplace zgjidh Neon, planin Free dhe emrin `rideshare-java4`, pastaj Connect Project. Përdor të njëjtën degë gjatë laboratorit; shmang degët automatike për çdo deployment. Alternativë: krijoje drejtpërdrejt në Neon Console dhe kopjo Connection string në `.env.local`. Nëse databaza ekziston në llogarinë tënde, ripërdore; mungesa e konfigurimit këtu nuk provon se databaza nuk ekziston. Mos krijo dublikatë. Qasja në Neon dhe konfigurimi i kredencialeve mbeten të nevojshme.
 
 Në SQL Editor të degës që përputhet me DATABASE_URL ekzekuto, sipas radhës:
 
@@ -101,6 +105,16 @@ npm.cmd run test:browser -- tests/unconfigured.spec.ts
 npm.cmd run test:browser -- tests/navigation.spec.ts
 ```
 
+Për verifikimin e URL-së reale, nga aplikacioni/ në PowerShell:
+
+```powershell
+$env:PLAYWRIGHT_BASE_URL='https://rideshare-mobile-five.vercel.app'
+npm.cmd run test:browser -- tests/navigation.spec.ts
+Remove-Item Env:PLAYWRIGHT_BASE_URL
+```
+
+Konfigurimi ekzekuton secilin skenar në viewport 375×844 dhe 390×844. Këto janë prova në shfletues, jo në telefon fizik. Në kontrollin e 22.10.2026, dy provat e navigimit në prodhim dështuan te kërkesa për tri karta (u gjetën zero). Dy provat e gjendjes pa databazë/panelit pa hyrje kaluan. ESLint, TypeScript, nëntë teste të izoluara dhe build kaluan. Asnjë kusht i përkohshëm nuk u aktivizua në prodhim.
+
 Këto dy skenarë kërkojnë konfigurime të ndryshme; mos i ekzekuto bashkë. Për një shfletues tjetër përshtat `channel` në `playwright.config.ts`. Prova e navigimit kaloi para zëvendësimit të të dhënave fikse; ende duhet përsëritur kundër Neon.
 
 ## Shpjegime të shkurtra për klasë
@@ -113,11 +127,11 @@ Këto dy skenarë kërkojnë konfigurime të ndryshme; mos i ekzekuto bashkë. P
 - **Autentikim:** GitHub vërteton kush je. **Autorizim:** serveri vendos nëse lejohet ndryshimi.
 - **Sesion:** identitet i verifikuar në JWT, me afat dy orë. **Rol:** leja aktuale nga Neon. **Pronësi:** shofer_id duhet të jetë ID e sesionit. Fshehja e formularit nuk e zëvendëson kontrollin në server.
 
-## Publikimi opsional
+## Publikimi në Vercel
 
-Puna lokale dhe dorëzimi i kursit janë të detyrueshme; Vercel është opsional. Root Directory është `aplikacioni`. Vendos DATABASE_URL në mjediset përkatëse (Development/Production, Preview vetëm nëse nevojitet) dhe bëj Redeploy pas konfigurimit.
+Projekti ekzistues është `arti-fbfc/rideshare-mobile`, i lidhur me GitHub `art-cse/rideshare-mobile`, dega e prodhimit `main`. Framework është Next.js, Root Directory është `aplikacioni`, Node është 24.x dhe komandat e build/install përdorin zbulimin standard për npm/Next.js. Vendos DATABASE_URL në mjediset përkatëse (Development/Production, Preview vetëm nëse nevojitet) dhe bëj Redeploy pas konfigurimit.
 
-Për prodhim krijo OAuth App tjetër me URL HTTPS të qëndrueshme dhe callback `/api/auth/callback/github`. Përdor kredenciale dhe NEXTAUTH_SECRET të veçantë, si dhe NEXTAUTH_URL të prodhimit. Mos përdor URL Preview që ndryshon. Nuk është bërë publikim.
+Për prodhim krijo OAuth App tjetër me URL HTTPS të qëndrueshme dhe callback `/api/auth/callback/github`. Përdor kredenciale dhe NEXTAUTH_SECRET të veçantë, si dhe NEXTAUTH_URL të prodhimit. Mos përdor URL Preview që ndryshon. Aplikacioni është publikuar në URL-në e mësipërme; integrimet nuk janë funksionale ende.
 
 ## Raportet dhe dorëzimi
 
@@ -127,6 +141,17 @@ Raportet `java-03.md`, `java-04.md`, `java-05.md` qëndrojnë pranë këtij READ
 
 Lexo komentin “Kontrolli automatik i dorëzimit”. Pas korrigjimeve dhe push-it, komento vetëm `rikontrollo` në Issue-n ekzistuese të asaj jave. Mos krijo dublikatë. Pesë kontrolle teknike të kaluara nuk provojnë funksionimin dhe nuk janë nota. Dorëzimi gjatë laboratorit është synim; lejohet gjatë javës dhe afatin përfundimtar e përcakton profesori. Konfirmimi QR i pranisë është i veçantë.
 
-Nuk është kryer commit, push, publikim ose dorëzim. Raportet e Javëve 4–5 mbeten në pritje të provave reale.
+Kodi është ruajtur në GitHub dhe është publikuar në Vercel. Nuk janë krijuar Issue dorëzimi ose komente. Raportet e Javëve 4–5 mbeten në pritje të provave reale.
 
 Materiali i kursit: [Java 3](https://arbenl.github.io/lendet/2026-2027/mobile/java-03/ushtrimet.html), [Java 4](https://arbenl.github.io/lendet/2026-2027/mobile/java-04/ushtrimet.html), [Java 5](https://arbenl.github.io/lendet/2026-2027/mobile/java-05/ushtrimet.html), [nisja](https://arbenl.github.io/lendet/2026-2027/mobile/nis-projektin.html), [dorëzimet](https://arbenl.github.io/lendet/2026-2027/mobile/dorezimet.html).
+
+## Hapat e mbetur për aktivizimin real
+
+1. Te Neon Console përdor databazën ekzistuese nëse ka; vetëm në mungesë të saj krijo një databazë Free. Vendos Connection string në `aplikacioni/.env.local` si DATABASE_URL dhe në Vercel Environment Variables për Production/Development. Mos dërgo sekretet në chat.
+2. Krijo ose përdor OAuth App të veçantë për prodhim te GitHub Settings → Developer settings → OAuth Apps. Homepage: `https://rideshare-mobile-five.vercel.app`; callback: `https://rideshare-mobile-five.vercel.app/api/auth/callback/github`. Vendos GITHUB_ID dhe GITHUB_SECRET të këtij aplikacioni vetëm në Vercel Production. Për localhost përdor OAuth App tjetër dhe vlerat lokale përkatëse.
+3. Ekzekuto SQL-të sipas radhës dhe verifiko ruajtjen e të dhënave ekzistuese; mos rivendos pronësinë verbërisht. Bëj redeploy pas konfigurimit. Hyr realisht për të krijuar profilin udhetar, pastaj përdor ID-në numerike të panelit për caktimin manual të rolit/pronarit 2.
+4. Kryej provat reale të dokumentuara më sipër. Rikthe 2 në 08:15, ruaj 1 në 08:00 te shoferi fiktiv dhe 3 me zero vende. Ende nuk është konfirmuar gjendja e një databaze reale.
+
+## Kontrolli i shkurtër në telefon
+
+Pas konfigurimit: hap URL-në publike në një sesion të ri; shiko tri kartat pa lëvizje anash; hap 2 → Kërko vend → kthehu; provo 3 dhe ID 99; hyr me GitHub dhe rifresko; si pronar i 2 ruaj 08:25 dhe rikthe 08:15; dil dhe kontrollo kërkesën për hyrje. Kjo listë duhet kryer personalisht në telefon; nuk është shënuar si e kryer.
