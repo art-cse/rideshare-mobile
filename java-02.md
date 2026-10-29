@@ -1,6 +1,6 @@
 # RideShare — Java 2
 
-**Shkurtesat:** MVP (Minimum Viable Product – produkti minimal i përdorshëm); AI (Artificial Intelligence – inteligjencë artificiale).
+**Shkurtesat:** MVP (Minimum Viable Product – produkti minimal i përdorshëm).
 
 ## 1. Problemi
 Studentët që udhëtojnë për në AAB mund të kenë shpenzime të larta transporti dhe orare të autobusëve që nuk përputhen me ligjëratat. Ata e kanë të vështirë të gjejnë studentë të tjerë që udhëtojnë në të njëjtin drejtim dhe në të njëjtën kohë. RideShare synon t’i ndihmojë të ndajnë udhëtimin dhe shpenzimet.
@@ -29,8 +29,11 @@ Për këtë version provues, udhëtimet mund të jenë të parapërgatitura.
 - Kur zgjedh një udhëtim me vende të lira dhe shtyp “Kërko një vend”, duhet të regjistrohet vetëm një kërkesë dhe të hapet ekrani “Kërkesa në pritje” me udhëtimin e saktë. Shtypja e përsëritur nuk duhet të krijojë kërkesa të dyfishta.
 - Nëse nuk ka vende të lira, duhet të shfaqet mesazhi “Nuk ka vende të lira” dhe butoni i kërkesës duhet të jetë i çaktivizuar. Nëse vendi i fundit është zënë ndërkohë, aplikacioni duhet ta kontrollojë sërish  disponueshmërinë gjatë dërgimit dhe të mos e regjistrojë kërkesën.
 
-## 7. Prova me kolegun
+## 7. Prova me kolegun dhe rishikimi i skicës
 
 
-## 8. Ndihma nga AI
+Prova me kolegun nuk është raportuar si e kryer. Gjatë rishikimit u vërejt se skica ekzistuese ishte për BarberBook dhe nuk përputhej me RideShare. U përgatit skica.png me listën, detajet dhe kërkesën e simuluar. U dallua qartë statusi në pritje nga konfirmimi dhe u shënua rasti me zero vende. Kjo nuk zëvendëson provën me një koleg.
+
+## Përputhja me zbatimin e Javëve 3–4
+Pjesët e mësipërme për regjistrim real, shmangie të kërkesave të dyfishta, çmime dhe emra shoferësh janë synime të planit fillestar. Në laboratorin aktual kemi vetëm tri karta, detajet dhe simulimin; nuk shkruhet kërkesë në databazë. Të dhënat e udhëtimeve lexohen nga Neon. Skica dixhitale është te skica.png; fotoja e një skice në letër dhe prova me kolegun mbeten aktivitete personale.
 

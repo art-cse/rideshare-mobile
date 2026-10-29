@@ -1,5 +1,10 @@
 # rideshare-mobile
 
+## Repository i përbashkët i dorëzimeve
+
+Ky është repository kryesor për dorëzimet e lëndës dhe aplikacionin në Vercel. Dokumentet e Javës 1, skica RideShare dhe shënimet e Javës 2 janë bartur nga `art-cse/Intermed-mobile`. Ai repository ruan historikun e mëparshëm. Dokumentet `exit-ticket.md` dhe `prd.md` përshkruajnë projektin individual Intermed; kodi i laboratorit vazhdon të jetë RideShare.
+
+
 **Produksioni:** https://rideshare-mobile-five.vercel.app
 
 **Gjendja e verifikuar më 22.10.2026:** URL-ja hapet publikisht pa llogari Vercel, por aplikacioni ende nuk është gati për demonstrim. Lista shfaq gabim lidhjeje: DATABASE_URL mungon lokalisht dhe në Vercel. Mungojnë edhe GITHUB_ID/GITHUB_SECRET. NEXTAUTH_SECRET dhe NEXTAUTH_URL të prodhimit ekzistojnë dhe janë ruajtur pa rotacion.
