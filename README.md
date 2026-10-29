@@ -7,7 +7,7 @@ Ky është repository kryesor për dorëzimet e lëndës dhe aplikacionin në Ve
 
 **Produksioni:** https://rideshare-mobile-five.vercel.app
 
-**Gjendja e rifreskuar më 29.10.2026:** Vercel Production është READY për kodin e Javës 6. DATABASE_URL, NEXTAUTH_SECRET dhe NEXTAUTH_URL ekzistojnë në Vercel; mungojnë GITHUB_ID dhe GITHUB_SECRET. Neon `rideshare-java4` u kontrollua me SELECT dhe përmban tri udhëtimet fiktive në orët 08:00, 08:15 dhe 07:45. Kërkesa HTTP reale `/api/udhetimet` ktheu HTTP 200 me tri udhëtimet; manifesti, service worker, lexuesi offline dhe të dy ikonat gjithashtu kthyen HTTP 200. Kjo nuk provon ende funksionimin PWA pa internet. Lidhja lokale DATABASE_URL mbetet e paverifikuar. Nuk u ndryshuan të dhëna në databazë.
+**Gjendja e rifreskuar më 29.10.2026:** Vercel Production është READY për kodin e Javës 6. DATABASE_URL, NEXTAUTH_SECRET, NEXTAUTH_URL, GITHUB_ID dhe GITHUB_SECRET ekzistojnë në Vercel Production. OAuth u riaktivizua në deploy të ri READY; hyrja interaktive me GitHub mbetet për t'u provuar. Neon `rideshare-java4` u kontrollua me SELECT dhe përmban tri udhëtimet fiktive në orët 08:00, 08:15 dhe 07:45. Kërkesa HTTP reale `/api/udhetimet` ktheu HTTP 200 me tri udhëtimet; manifesti, service worker, lexuesi offline dhe të dy ikonat gjithashtu kthyen HTTP 200. Kjo nuk provon ende funksionimin PWA pa internet. Lidhja lokale DATABASE_URL mbetet e paverifikuar. Nuk u ndryshuan të dhëna në databazë.
 
 Aplikacioni i përbashkët RideShare për laboratorët AAB, Javët 3–5. Nuk është projekti individual i biznesit. Ndërfaqja është në shqip; kërkesat për vend mbeten simulim, pa rezervime reale.
 
@@ -136,7 +136,7 @@ Këto dy skenarë kërkojnë konfigurime të ndryshme; mos i ekzekuto bashkë. P
 
 Projekti ekzistues është `arti-fbfc/rideshare-mobile`, i lidhur me GitHub `art-cse/rideshare-mobile`, dega e prodhimit `main`. Framework është Next.js, Root Directory është `aplikacioni`, Node është 24.x dhe komandat e build/install përdorin zbulimin standard për npm/Next.js. Vendos DATABASE_URL në mjediset përkatëse (Development/Production, Preview vetëm nëse nevojitet) dhe bëj Redeploy pas konfigurimit.
 
-Për prodhim krijo OAuth App tjetër me URL HTTPS të qëndrueshme dhe callback `/api/auth/callback/github`. Vendos GITHUB_ID dhe GITHUB_SECRET në Vercel Production, pa i shpërndarë. NEXTAUTH_SECRET dhe NEXTAUTH_URL të prodhimit janë të pranishëm; mos i ndrysho pa nevojë. Mos përdor URL Preview që ndryshon. Aplikacioni është publikuar; integrimi Neon për lexim është verifikuar me GET `/api/udhetimet` në prodhim; hyrja GitHub OAuth dhe shkrimet me leje nuk janë verifikuar.
+Për prodhim OAuth App u krijua për domenin HTTPS dhe GITHUB_ID/GITHUB_SECRET u vendosën në Vercel Production; mos i publiko ose përfshi në raporte. NEXTAUTH_SECRET dhe NEXTAUTH_URL të prodhimit janë të pranishëm; mos i ndrysho pa nevojë. Mos përdor URL Preview që ndryshon. Aplikacioni është publikuar; integrimi Neon për lexim është verifikuar me GET `/api/udhetimet` në prodhim; endpoint-et e autentikimit u hapën me HTTP 200, por hyrja reale GitHub OAuth dhe shkrimet me leje nuk janë verifikuar.
 
 ## Raportet dhe dorëzimi
 
@@ -186,3 +186,7 @@ GitHub OAuth App për Production duhet krijuar nga pronari i llogarisë te https
 Pasi të krijohet, vendos Client ID si `GITHUB_ID` dhe Client Secret si `GITHUB_SECRET` në Vercel → rideshare-mobile → Settings → Environment Variables për **Production**, pa i publikuar në GitHub, chat ose raporte. Vercel kërkon redeploy të prodhimit që të marrë variablat e reja. `NEXTAUTH_URL` dhe `NEXTAUTH_SECRET` tashmë ekzistojnë dhe nuk duhen zëvendësuar.
 
 Hyr te `/panel` për të krijuar profilin real `udhetar`, konfirmo ID-në numerike të GitHub në panel dhe vetëm pas kësaj cakto pronësinë e udhëtimit 2 nga Neon. Të mos improvizohet profil apo leje pa hyrjen e verifikuar.
+
+## Verifikimi i fundit i OAuth në prodhim · 29.10.2026
+
+Pas ruajtjes së `GITHUB_ID` dhe `GITHUB_SECRET`, u krye një redeploy i prodhimit me sukses: `dpl_59stmw5e2GHLoZKCLBwJM11Uua91` (`READY`), në domenin `https://rideshare-mobile-five.vercel.app`. `/api/auth/signin/github`, `/api/auth/providers`, `/api/auth/session`, `/panel` dhe `/api/udhetimet` kthyen HTTP 200. Sesioni anonim ktheu `{}`, siç pritet. **Nuk është provuar ende hyrja reale, OAuth callback apo krijimi i profilit**. Hapi i radhës: vizito `/panel` nga shfletuesi yt, kliko `Hyr me GitHub` dhe autorizo aplikacionin. Pas kthimit te paneli, kontrollo rolin `udhetar` dhe përdor ID-në numerike të verifikuar për caktimin e shoferit të udhëtimit 2.
