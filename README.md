@@ -7,7 +7,7 @@ Ky është repository kryesor për dorëzimet e lëndës dhe aplikacionin në Ve
 
 **Produksioni:** https://rideshare-mobile-five.vercel.app
 
-**Gjendja e verifikuar më 22.10.2026:** URL-ja hapet publikisht pa llogari Vercel, por aplikacioni ende nuk është gati për demonstrim. Lista shfaq gabim lidhjeje: DATABASE_URL mungon lokalisht dhe në Vercel. Mungojnë edhe GITHUB_ID/GITHUB_SECRET. NEXTAUTH_SECRET dhe NEXTAUTH_URL të prodhimit ekzistojnë dhe janë ruajtur pa rotacion.
+**Gjendja e rifreskuar më 29.10.2026:** Vercel Production është READY për kodin e Javës 6. DATABASE_URL, NEXTAUTH_SECRET dhe NEXTAUTH_URL ekzistojnë në Vercel; mungojnë GITHUB_ID dhe GITHUB_SECRET. Neon `rideshare-java4` u kontrollua me SELECT dhe përmban tri udhëtimet fiktive në orët 08:00, 08:15 dhe 07:45. Kjo nuk provon ende kërkesën HTTP nga aplikacioni apo funksionimin e PWA offline. Lidhja lokale DATABASE_URL mbetet e paverifikuar. Nuk u ndryshuan të dhëna në databazë.
 
 Aplikacioni i përbashkët RideShare për laboratorët AAB, Javët 3–5. Nuk është projekti individual i biznesit. Ndërfaqja është në shqip; kërkesat për vend mbeten simulim, pa rezervime reale.
 
@@ -136,27 +136,32 @@ Këto dy skenarë kërkojnë konfigurime të ndryshme; mos i ekzekuto bashkë. P
 
 Projekti ekzistues është `arti-fbfc/rideshare-mobile`, i lidhur me GitHub `art-cse/rideshare-mobile`, dega e prodhimit `main`. Framework është Next.js, Root Directory është `aplikacioni`, Node është 24.x dhe komandat e build/install përdorin zbulimin standard për npm/Next.js. Vendos DATABASE_URL në mjediset përkatëse (Development/Production, Preview vetëm nëse nevojitet) dhe bëj Redeploy pas konfigurimit.
 
-Për prodhim krijo OAuth App tjetër me URL HTTPS të qëndrueshme dhe callback `/api/auth/callback/github`. Përdor kredenciale dhe NEXTAUTH_SECRET të veçantë, si dhe NEXTAUTH_URL të prodhimit. Mos përdor URL Preview që ndryshon. Aplikacioni është publikuar në URL-në e mësipërme; integrimet nuk janë funksionale ende.
+Për prodhim krijo OAuth App tjetër me URL HTTPS të qëndrueshme dhe callback `/api/auth/callback/github`. Vendos GITHUB_ID dhe GITHUB_SECRET në Vercel Production, pa i shpërndarë. NEXTAUTH_SECRET dhe NEXTAUTH_URL të prodhimit janë të pranishëm; mos i ndrysho pa nevojë. Mos përdor URL Preview që ndryshon. Aplikacioni është publikuar; integrimi Neon ka konfigurim dhe të dhëna reale, por kërkesa HTTP dhe integrimi GitHub OAuth nuk janë verifikuar plotësisht.
 
 ## Raportet dhe dorëzimi
 
-Raportet `java-03.md`, `java-04.md`, `java-05.md` qëndrojnë pranë këtij README. `java-02.md` dhe skica janë ruajtur pa ndryshim. `package.json` lejohet në rrënjë ose brenda `aplikacioni/`; këtu është brenda aplikacionit. Të dy SQL-të dhe `package-lock.json` janë pranë tij. Mos përfshi `.env*`, `node_modules` ose `.next` në commit.
+Raportet `java-03.md`, `java-04.md`, `java-05.md` dhe `java-06.md` qëndrojnë pranë këtij README. `java-02.md` dhe skica janë ruajtur pa ndryshim. `package.json` lejohet në rrënjë ose brenda `aplikacioni/`; këtu është brenda aplikacionit. Të dy SQL-të dhe `package-lock.json` janë pranë tij. Mos përfshi `.env*`, `node_modules` ose `.next` në commit.
 
 Çdo javë kërkon dorëzim më vete me të njëjtin repository personal. Kontrolli automatik kërkon repository publik; për privat merret vesh dorëzimi me profesorin. Nga llogaria GitHub që zotëron repository-n, përdor [formularin](https://github.com/arbenl/arbenl-mobile-assignments-2026-2027/issues/new?template=mobile-submission.yml), zgjidh Java 3, Java 4 ose Java 5 dhe vendos vetëm `https://github.com/art-cse/rideshare-mobile`, jo localhost, Vercel ose link skedari.
 
 Lexo komentin “Kontrolli automatik i dorëzimit”. Pas korrigjimeve dhe push-it, komento vetëm `rikontrollo` në Issue-n ekzistuese të asaj jave. Mos krijo dublikatë. Pesë kontrolle teknike të kaluara nuk provojnë funksionimin dhe nuk janë nota. Dorëzimi gjatë laboratorit është synim; lejohet gjatë javës dhe afatin përfundimtar e përcakton profesori. Konfirmimi QR i pranisë është i veçantë.
 
-Kodi është ruajtur në GitHub dhe është publikuar në Vercel. Nuk janë krijuar Issue dorëzimi ose komente. Raportet e Javëve 4–5 mbeten në pritje të provave reale.
+Kodi është ruajtur në GitHub dhe është publikuar në Vercel. Issue-t e Java 1–4 janë krijuar dhe kontrolli automatik raportoi 2/2, 2/2, 5/5 dhe 5/5; këto janë kontrolle teknike, jo nota. Java 5 dhe Java 6 nuk kanë ende Issue dorëzimi. Provat reale të Javëve 4–6 mbeten për t'u plotësuar.
 
 Materiali i kursit: [Java 3](https://arbenl.github.io/lendet/2026-2027/mobile/java-03/ushtrimet.html), [Java 4](https://arbenl.github.io/lendet/2026-2027/mobile/java-04/ushtrimet.html), [Java 5](https://arbenl.github.io/lendet/2026-2027/mobile/java-05/ushtrimet.html), [nisja](https://arbenl.github.io/lendet/2026-2027/mobile/nis-projektin.html), [dorëzimet](https://arbenl.github.io/lendet/2026-2027/mobile/dorezimet.html).
 
 ## Hapat e mbetur për aktivizimin real
 
-1. Te Neon Console përdor databazën ekzistuese nëse ka; vetëm në mungesë të saj krijo një databazë Free. Vendos Connection string në `aplikacioni/.env.local` si DATABASE_URL dhe në Vercel Environment Variables për Production/Development. Mos dërgo sekretet në chat.
+1. Neon `rideshare-java4` dhe tri udhëtimet e sakta ekzistojnë; mos krijo databazë tjetër. DATABASE_URL është tashmë i vendosur në Vercel Production/Development. Për prova lokale konfiguro lidhjen në `aplikacioni/.env.local` vetëm në pajisjen tënde; mos dërgo sekretet në chat.
 2. Krijo ose përdor OAuth App të veçantë për prodhim te GitHub Settings → Developer settings → OAuth Apps. Homepage: `https://rideshare-mobile-five.vercel.app`; callback: `https://rideshare-mobile-five.vercel.app/api/auth/callback/github`. Vendos GITHUB_ID dhe GITHUB_SECRET të këtij aplikacioni vetëm në Vercel Production. Për localhost përdor OAuth App tjetër dhe vlerat lokale përkatëse.
-3. Ekzekuto SQL-të sipas radhës dhe verifiko ruajtjen e të dhënave ekzistuese; mos rivendos pronësinë verbërisht. Bëj redeploy pas konfigurimit. Hyr realisht për të krijuar profilin udhetar, pastaj përdor ID-në numerike të panelit për caktimin manual të rolit/pronarit 2.
-4. Kryej provat reale të dokumentuara më sipër. Rikthe 2 në 08:15, ruaj 1 në 08:00 te shoferi fiktiv dhe 3 me zero vende. Ende nuk është konfirmuar gjendja e një databaze reale.
+3. Tabelat `udhetimet` dhe `profilet` ekzistojnë; mos riekzekuto migrimet pa një kontroll paraprak. Bëj redeploy pasi të shtosh OAuth. Hyr realisht për të krijuar profilin `udhetar`, pastaj përdor ID-në numerike nga paneli për caktimin manual të rolit/pronarit 2.
+4. Kryej provat reale të dokumentuara më sipër dhe tri provat PWA të Javës 6. Vlerat e Neon tani janë: ID 1 = 08:00 te shoferi fiktiv, ID 2 = 08:15 pa pronar, ID 3 = 07:45 me zero vende. Rikthe gjendjen fillestare pas testimit.
 
 ## Kontrolli i shkurtër në telefon
 
 Pas konfigurimit: hap URL-në publike në një sesion të ri; shiko tri kartat pa lëvizje anash; hap 2 → Kërko vend → kthehu; provo 3 dhe ID 99; hyr me GitHub dhe rifresko; si pronar i 2 ruaj 08:25 dhe rikthe 08:15; dil dhe kontrollo kërkesën për hyrje. Kjo listë duhet kryer personalisht në telefon; nuk është shënuar si e kryer.
+
+
+## Java 6 · PWA (statusi i fundit)
+
+Kodin e Javës 6 e përmban commit-i `ab3af5b`; manifesti, ikonat, API publike, service worker, lexuesi offline dhe regjistrimi në layout janë në repository. Deploy i këtij commit-i rezultoi READY në Vercel. Raporti `java-06.md` dallon kontrollin e kodit/deployment-it nga provat reale që mbeten: lista e ruajtur me internet, rifreskimi offline dhe përditësimi pas rikthimit të lidhjes. Asnjë test interaktiv i pambajtur nuk shënohet i kaluar.
