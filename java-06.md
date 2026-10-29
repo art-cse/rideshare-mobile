@@ -21,7 +21,7 @@ Offline lexohet **vetëm lista publike**. Nuk krijohet rezervim dhe nuk ruhen se
 
 **Pritshmëria:** Emri RideShare AAB, ikonat 192×192 / 512×512, service worker aktiv dhe tri udhëtimet të ruajtura në kopjen publike.
 
-**Rezultati i verifikuar:** Skedarët dhe konfigurimi janë të pranishëm në repository. Vercel e ka ndërtuar me sukses commit-in e Javës 6. Më 29.10.2026, Neon i ktheu tri udhëtimet e pritshme nga tabela `udhetimet`: ID 1 në 08:00, ID 2 në 08:15 dhe ID 3 në 07:45.
+**Rezultati i verifikuar:** Më 29.10.2026, nga deployment-i i prodhimit u kërkuan drejtpërdrejt `/manifest.webmanifest`, të dy ikonat, `/sw.js`, `/offline.html` dhe `/api/udhetimet`: secila adresë ktheu HTTP 200 me llojin e duhur të përmbajtjes. Manifesti ka emrin dhe përmasat e sakta. API ktheu JSON me tri udhëtimet (ID 1 = 08:00, ID 2 = 08:15, ID 3 = 07:45), që përputhen me SELECT nga Neon. Skedarët dhe konfigurimi janë të pranishëm në GitHub dhe deploy i Vercel është READY.
 
 **Nuk është verifikuar ende** në shfletues aktivizimi i worker-it, prania e `/api/udhetimet` në Cache Storage, koha e kopjes dhe instalimi.
 
@@ -52,6 +52,18 @@ UPDATE udhetimet SET ora = '08:15' WHERE id = '2';
 - Repository: https://github.com/art-cse/rideshare-mobile
 - Demo prodhimi: https://rideshare-mobile-five.vercel.app
 - Commit-i i PWA: https://github.com/art-cse/rideshare-mobile/commit/ab3af5b95346785ab5d3b4385b49d66fd4f572be
+
+## Testi automatik i përgatitur
+
+`aplikacioni/tests/pwa.spec.ts` përmban një test Playwright për manifestin, ikonat, aktivizimin e service worker-it, kopjen e ruajtur, rifreskimin pa internet dhe kthimin online. Testi **është krijuar në kod**, por nuk është ekzekutuar në një shfletues real gjatë këtij verifikimi. Për ekzekutim me Edge dhe bazën e prodhimit (nga `aplikacioni/`):
+
+```powershell
+$env:PLAYWRIGHT_BASE_URL='https://rideshare-mobile-five.vercel.app'
+npm.cmd run test:browser -- tests/pwa.spec.ts
+Remove-Item Env:PLAYWRIGHT_BASE_URL
+```
+
+Kjo provë automatike nuk e ndryshon orën në databazë; skenari manual 08:15 → 08:25 → 08:15 mbetet veçmas.
 
 ## Çfarë mbetet për përmirësim
 
