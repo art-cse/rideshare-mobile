@@ -7,7 +7,7 @@ Ky është repository kryesor për dorëzimet e lëndës dhe aplikacionin në Ve
 
 **Produksioni:** https://rideshare-mobile-five.vercel.app
 
-**Gjendja e rifreskuar më 29.10.2026:** Vercel Production është READY për kodin e Javës 6. DATABASE_URL, NEXTAUTH_SECRET dhe NEXTAUTH_URL ekzistojnë në Vercel; mungojnë GITHUB_ID dhe GITHUB_SECRET. Neon `rideshare-java4` u kontrollua me SELECT dhe përmban tri udhëtimet fiktive në orët 08:00, 08:15 dhe 07:45. Kjo nuk provon ende kërkesën HTTP nga aplikacioni apo funksionimin e PWA offline. Lidhja lokale DATABASE_URL mbetet e paverifikuar. Nuk u ndryshuan të dhëna në databazë.
+**Gjendja e rifreskuar më 29.10.2026:** Vercel Production është READY për kodin e Javës 6. DATABASE_URL, NEXTAUTH_SECRET dhe NEXTAUTH_URL ekzistojnë në Vercel; mungojnë GITHUB_ID dhe GITHUB_SECRET. Neon `rideshare-java4` u kontrollua me SELECT dhe përmban tri udhëtimet fiktive në orët 08:00, 08:15 dhe 07:45. Kërkesa HTTP reale `/api/udhetimet` ktheu HTTP 200 me tri udhëtimet; manifesti, service worker, lexuesi offline dhe të dy ikonat gjithashtu kthyen HTTP 200. Kjo nuk provon ende funksionimin PWA pa internet. Lidhja lokale DATABASE_URL mbetet e paverifikuar. Nuk u ndryshuan të dhëna në databazë.
 
 Aplikacioni i përbashkët RideShare për laboratorët AAB, Javët 3–5. Nuk është projekti individual i biznesit. Ndërfaqja është në shqip; kërkesat për vend mbeten simulim, pa rezervime reale.
 
@@ -136,13 +136,13 @@ Këto dy skenarë kërkojnë konfigurime të ndryshme; mos i ekzekuto bashkë. P
 
 Projekti ekzistues është `arti-fbfc/rideshare-mobile`, i lidhur me GitHub `art-cse/rideshare-mobile`, dega e prodhimit `main`. Framework është Next.js, Root Directory është `aplikacioni`, Node është 24.x dhe komandat e build/install përdorin zbulimin standard për npm/Next.js. Vendos DATABASE_URL në mjediset përkatëse (Development/Production, Preview vetëm nëse nevojitet) dhe bëj Redeploy pas konfigurimit.
 
-Për prodhim krijo OAuth App tjetër me URL HTTPS të qëndrueshme dhe callback `/api/auth/callback/github`. Vendos GITHUB_ID dhe GITHUB_SECRET në Vercel Production, pa i shpërndarë. NEXTAUTH_SECRET dhe NEXTAUTH_URL të prodhimit janë të pranishëm; mos i ndrysho pa nevojë. Mos përdor URL Preview që ndryshon. Aplikacioni është publikuar; integrimi Neon ka konfigurim dhe të dhëna reale, por kërkesa HTTP dhe integrimi GitHub OAuth nuk janë verifikuar plotësisht.
+Për prodhim krijo OAuth App tjetër me URL HTTPS të qëndrueshme dhe callback `/api/auth/callback/github`. Vendos GITHUB_ID dhe GITHUB_SECRET në Vercel Production, pa i shpërndarë. NEXTAUTH_SECRET dhe NEXTAUTH_URL të prodhimit janë të pranishëm; mos i ndrysho pa nevojë. Mos përdor URL Preview që ndryshon. Aplikacioni është publikuar; integrimi Neon për lexim është verifikuar me GET `/api/udhetimet` në prodhim; hyrja GitHub OAuth dhe shkrimet me leje nuk janë verifikuar.
 
 ## Raportet dhe dorëzimi
 
 Raportet `java-03.md`, `java-04.md`, `java-05.md` dhe `java-06.md` qëndrojnë pranë këtij README. `java-02.md` dhe skica janë ruajtur pa ndryshim. `package.json` lejohet në rrënjë ose brenda `aplikacioni/`; këtu është brenda aplikacionit. Të dy SQL-të dhe `package-lock.json` janë pranë tij. Mos përfshi `.env*`, `node_modules` ose `.next` në commit.
 
-Çdo javë kërkon dorëzim më vete me të njëjtin repository personal. Kontrolli automatik kërkon repository publik; për privat merret vesh dorëzimi me profesorin. Nga llogaria GitHub që zotëron repository-n, përdor [formularin](https://github.com/arbenl/arbenl-mobile-assignments-2026-2027/issues/new?template=mobile-submission.yml), zgjidh Java 3, Java 4 ose Java 5 dhe vendos vetëm `https://github.com/art-cse/rideshare-mobile`, jo localhost, Vercel ose link skedari.
+Çdo javë kërkon dorëzim më vete me të njëjtin repository personal. Kontrolli automatik kërkon repository publik; për privat merret vesh dorëzimi me profesorin. Nga llogaria GitHub që zotëron repository-n, përdor [formularin](https://github.com/arbenl/arbenl-mobile-assignments-2026-2027/issues/new?template=mobile-submission.yml), zgjidh Javën përkatëse (Java 1–6) dhe vendos vetëm `https://github.com/art-cse/rideshare-mobile`, jo localhost, Vercel ose link skedari.
 
 Lexo komentin “Kontrolli automatik i dorëzimit”. Pas korrigjimeve dhe push-it, komento vetëm `rikontrollo` në Issue-n ekzistuese të asaj jave. Mos krijo dublikatë. Pesë kontrolle teknike të kaluara nuk provojnë funksionimin dhe nuk janë nota. Dorëzimi gjatë laboratorit është synim; lejohet gjatë javës dhe afatin përfundimtar e përcakton profesori. Konfirmimi QR i pranisë është i veçantë.
 
@@ -164,4 +164,13 @@ Pas konfigurimit: hap URL-në publike në një sesion të ri; shiko tri kartat p
 
 ## Java 6 · PWA (statusi i fundit)
 
-Kodin e Javës 6 e përmban commit-i `ab3af5b`; manifesti, ikonat, API publike, service worker, lexuesi offline dhe regjistrimi në layout janë në repository. Deploy i këtij commit-i rezultoi READY në Vercel. Raporti `java-06.md` dallon kontrollin e kodit/deployment-it nga provat reale që mbeten: lista e ruajtur me internet, rifreskimi offline dhe përditësimi pas rikthimit të lidhjes. Asnjë test interaktiv i pambajtur nuk shënohet i kaluar.
+Kodin e Javës 6 e përmban commit-i `ab3af5b`; manifesti, ikonat, API publike, service worker, lexuesi offline dhe regjistrimi në layout janë në repository. Deploy i këtij commit-i rezultoi READY në Vercel. Raporti `java-06.md` dallon kontrollin e kodit/deployment-it nga provat reale që mbeten: lista e ruajtur me internet, rifreskimi offline dhe përditësimi pas rikthimit të lidhjes. U verifikuan drejtpërdrejt me GET në Vercel manifesti, ikonat, service worker, lexuesi offline dhe API-ja e tri udhëtimeve (HTTP 200). `aplikacioni/tests/pwa.spec.ts` është një skenar automatik Playwright i ri për cache, rifreskimin offline dhe rikthimin e lidhjes. **Nuk është ekzekutuar ende** dhe nuk zëvendëson provën manuale 08:15 → 08:25 → 08:15. Asnjë test interaktiv i pambajtur nuk shënohet i kaluar.
+
+Komanda në PowerShell nga `aplikacioni/`:
+
+```powershell
+$env:PLAYWRIGHT_BASE_URL='https://rideshare-mobile-five.vercel.app'
+npm.cmd run test:browser -- tests/pwa.spec.ts
+Remove-Item Env:PLAYWRIGHT_BASE_URL
+```
+
