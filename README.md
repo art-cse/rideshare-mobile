@@ -146,7 +146,7 @@ Raportet `java-03.md`, `java-04.md`, `java-05.md` dhe `java-06.md` qëndrojnë p
 
 Lexo komentin “Kontrolli automatik i dorëzimit”. Pas korrigjimeve dhe push-it, komento vetëm `rikontrollo` në Issue-n ekzistuese të asaj jave. Mos krijo dublikatë. Pesë kontrolle teknike të kaluara nuk provojnë funksionimin dhe nuk janë nota. Dorëzimi gjatë laboratorit është synim; lejohet gjatë javës dhe afatin përfundimtar e përcakton profesori. Konfirmimi QR i pranisë është i veçantë.
 
-Kodi është ruajtur në GitHub dhe është publikuar në Vercel. Issue-t e Java 1–4 janë krijuar dhe kontrolli automatik raportoi 2/2, 2/2, 5/5 dhe 5/5; këto janë kontrolle teknike, jo nota. Java 5 dhe Java 6 nuk kanë ende Issue dorëzimi. Provat reale të Javëve 4–6 mbeten për t'u plotësuar.
+Kodi është ruajtur në GitHub dhe është publikuar në Vercel. Issue-t e Java 1–4 janë krijuar dhe kontrolli automatik raportoi 2/2, 2/2, 5/5 dhe 5/5; këto janë kontrolle teknike, jo nota. Java 5 është dorëzuar te [Issue #753](https://github.com/arbenl/arbenl-mobile-assignments-2026-2027/issues/753) dhe Java 6 te [Issue #754](https://github.com/arbenl/arbenl-mobile-assignments-2026-2027/issues/754). Bot-i dha 5/5 kontrolle teknike për të dyja më 29.10.2026; kjo nuk është notë ose provë që OAuth/offline punojnë. Provat reale të Javëve 4–6 mbeten për t'u plotësuar.
 
 Materiali i kursit: [Java 3](https://arbenl.github.io/lendet/2026-2027/mobile/java-03/ushtrimet.html), [Java 4](https://arbenl.github.io/lendet/2026-2027/mobile/java-04/ushtrimet.html), [Java 5](https://arbenl.github.io/lendet/2026-2027/mobile/java-05/ushtrimet.html), [nisja](https://arbenl.github.io/lendet/2026-2027/mobile/nis-projektin.html), [dorëzimet](https://arbenl.github.io/lendet/2026-2027/mobile/dorezimet.html).
 
@@ -174,3 +174,15 @@ npm.cmd run test:browser -- tests/pwa.spec.ts
 Remove-Item Env:PLAYWRIGHT_BASE_URL
 ```
 
+
+## Hyrja GitHub OAuth: veprimi që kërkon llogarinë tënde
+
+GitHub OAuth App për Production duhet krijuar nga pronari i llogarisë te https://github.com/settings/developers → OAuth Apps → New OAuth App. Nuk ka veprim të disponueshëm të GitHub API në këtë integrim për ta krijuar automatikisht.
+
+- Application name: `RideShare AAB Production`
+- Homepage URL: `https://rideshare-mobile-five.vercel.app`
+- Authorization callback URL: `https://rideshare-mobile-five.vercel.app/api/auth/callback/github`
+
+Pasi të krijohet, vendos Client ID si `GITHUB_ID` dhe Client Secret si `GITHUB_SECRET` në Vercel → rideshare-mobile → Settings → Environment Variables për **Production**, pa i publikuar në GitHub, chat ose raporte. Vercel kërkon redeploy të prodhimit që të marrë variablat e reja. `NEXTAUTH_URL` dhe `NEXTAUTH_SECRET` tashmë ekzistojnë dhe nuk duhen zëvendësuar.
+
+Hyr te `/panel` për të krijuar profilin real `udhetar`, konfirmo ID-në numerike të GitHub në panel dhe vetëm pas kësaj cakto pronësinë e udhëtimit 2 nga Neon. Të mos improvizohet profil apo leje pa hyrjen e verifikuar.
