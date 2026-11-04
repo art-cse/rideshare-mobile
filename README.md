@@ -1,5 +1,9 @@
 # rideshare-mobile
 
+## Java 7 — kontrolli i MVP-së
+
+Raporti [java-07.md](java-07.md) përmban rastin P7-107, parashikimin personal, dy probleme të vëzhguara, korrigjimin e orës/identifikimit në simulim, lidhjet para/pas dhe tri prova reale. Gjashtë kontrollet në 375px/390px, nëntë testet e lejeve, lint dhe build kaluan. Shpjegimi para kolegut dhe dorëzimi si Issue mbeten për studentin. Kërkesat mbeten simulim pa rezervime reale.
+
 ## Repository i përbashkët i dorëzimeve
 
 Ky është repository kryesor për dorëzimet e lëndës dhe aplikacionin në Vercel. Dokumentet e Javës 1, skica RideShare dhe shënimet e Javës 2 janë bartur nga `art-cse/Intermed-mobile`. Ai repository ruan historikun e mëparshëm. Dokumentet `exit-ticket.md` dhe `prd.md` përshkruajnë projektin individual Intermed; kodi i laboratorit vazhdon të jetë RideShare.
