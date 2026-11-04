@@ -77,6 +77,8 @@ Kontrolle shtesë: lint, build me TypeScript dhe 9 teste të lejeve kaluan; navi
 
 ## Ndryshimi i ri
 
+Verifikimi në Vercel: deployment `dpl_7gmbYELXWSiUPXFuFNB7AKNX2JYa`, commit `4efa08e1bf897a21483b6e3f47fd5049a8ae554c`, arriti READY në Production. Të njëjtat gjashtë prova kaluan edhe në https://rideshare-mobile-five.vercel.app. Pas pastrimit, API publike konfirmoi vetëm ID-të 1, 2 dhe 3.
+
 Rikontrolli i PWA-së: katër ekzekutime shtesë (dy për secilën gjerësi) kaluan. Dështimi i parë mbetet i regjistruar si rezultat i ndërprerë; shkaku nuk është izoluar dhe ky korrigjim nuk pretendon ta zgjidhë.
 
 U ndryshua vetëm numri i vendeve nga 3 në 0 te i njëjti rresht prove. Rezultati përputhet me parashikimin personal “Nuk ka vende te lira”. Shpjegimi 60–90 sekonda para një kolegu nuk është kryer këtu dhe mbetet për studentin. Nuk është krijuar Issue dorëzimi ose koment te repository i profesorit.
