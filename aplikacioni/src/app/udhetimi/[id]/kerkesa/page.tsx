@@ -10,6 +10,7 @@ export default async function Kerkesa({ params }: { params: Promise<{ id: string
   catch { return <GabimDatabaze />; }
   if (!udhetim) notFound();
   return <main><Link href={`/udhetimi/${id}`}>← Kthehu te detajet</Link>
+    <p>Udhëtimi {udhetim.id}: {udhetim.nisja} – {udhetim.destinacioni} · Ora: {udhetim.ora}</p>
     {udhetim.vende > 0 ? <><h1>Simulim: Në pritje</h1>
       <p>Kërkesa për udhëtimin {udhetim.nisja} – {udhetim.destinacioni} nuk është dërguar. Asnjë vend nuk është rezervuar.</p></>
       : <><h1>Nuk ka vende të lira</h1><p>Asnjë kërkesë nuk është dërguar dhe asnjë vend nuk është rezervuar.</p></>}
