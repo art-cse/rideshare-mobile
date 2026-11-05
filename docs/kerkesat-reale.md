@@ -9,7 +9,9 @@
 - Një indeks unik pengon dy kërkesa aktive (`pending` ose `accepted`) për të njëjtin udhëtar/udhëtim. Pas refuzimit ose anulimit mund të kërkohet përsëri.
 - “Kërko vend” te rrjedha e Javës 7 mbetet simulim. Vendtakimi dhe koordinatat e Javës 8 mbeten vetëm në faqen e telefonit dhe nuk dërgohen me kërkesën reale.
 
-## Migrimi — kërkon miratim para Production
+## Migrimi — aplikuar në Production me miratim
+
+Më 05.11.2026 përdoruesi miratoi aplikimin e migrimit. Ai u ekzekutua me lidhjen direkte Neon; krahasimi para/pas konfirmoi që tri udhëtimet dhe dy profilet ekzistuese mbetën identike. Funksioni i miratimit ekziston dhe tabela e kërkesave ishte bosh. Përdoruesi zgjodhi veçmas të mos ndryshohen rolet ose pronësia e udhëtimeve. Nuk u caktua shofer i ri.
 
 Migrimi është `aplikacioni/migrations/001-seat-requests.sql`. Ai krijon vetëm tabelën `kerkesat`, indekset dhe funksionin e veprimeve. Nuk fshin ose përditëson udhëtime/profile ekzistuese. Prerekuizitat janë tabelat ekzistuese nga `schema.sql` dhe `schema-java05.sql`; mos i riekzekuto pa nevojë në Production.
 
@@ -21,7 +23,7 @@ psql "$env:DATABASE_URL" -v ON_ERROR_STOP=1 -f aplikacioni/migrations/001-seat-r
 
 Mos publiko lidhjen. Në SQL Editor ekzekuto të gjithë migrimin, përfshirë BEGIN/COMMIT. Migrimi është provuar dy herë radhazi në databazë testimi pa humbur kërkesën ekzistuese. Nëse përdoret një rol tjetër serveri nga pronari i migrimit, ai kërkon privilegjet e tabelave/sekuencës dhe EXECUTE për funksionin; mos ia jep PUBLIC ose shfletuesit. Funksioni është SECURITY INVOKER, jo SECURITY DEFINER.
 
-Pa migrimin, faqet e kërkesave shfaqin “Kërkesat reale ende nuk janë aktivizuar.” Funksionet e mëparshme vazhdojnë të punojnë. Migrimi dhe caktimi i shoferit në Production nuk janë kryer nga ky implementim: kërkesa e përdoruesit i ndalon pa miratim të shprehur.
+Në instalime pa migrimin, faqet e kërkesave shfaqin “Kërkesat reale ende nuk janë aktivizuar.” Funksionet e mëparshme vazhdojnë të punojnë. Në Production migrimi është kryer, por caktimi i shoferit kërkon miratim të veçantë dhe është lënë i pandryshuar sipas zgjedhjes së përdoruesit.
 
 ## Caktimi i llogarisë reale si shofer
 
@@ -71,8 +73,9 @@ Referenca: [PostgreSQL row locks](https://www.postgresql.org/docs/current/explic
 - Navigimi, paneli publik, PWA dhe Java 8: 26/26 kontrolle browser kaluan në databazën lokale.
 - Testet ekzistuese të Javës 7: 6/6 kaluan me shkrimet e fixture-ve vetëm në databazën lokale.
 - Pa databazë/OAuth: 20/20 kontrolle kaluan, duke përfshirë gabimin e databazës dhe faqen e pavarur të Javës 8.
+- Në Vercel Production: 22/22 kontrolle publike kaluan për navigimin, panelin publik dhe Javën 8, përfshirë shfaqjen e koordinatave fiktive pas klikimit. Nuk u dërguan kërkesa reale ose koordinata personale.
 
-Databaza Production u inspektua vetëm me SELECT mbi skemën. Nuk u aplikua migrim, nuk u caktua rol dhe nuk u ndryshuan udhëtimet/profilet atje. Rezultatet e botit të profesorit dhe hyrja OAuth me dy llogari nuk janë pretenduar.
+Pas provave të izoluara, migrimi Production u aplikua vetëm pas miratimit të shprehur. Nuk u caktua rol, nuk u ndryshuan udhëtimet/profilet dhe nuk u krijuan kërkesa prove atje. Kodi i implementimit `268f377fc74cdfcabb46a281b6e288f575bd1b5a` u publikua në Vercel Production me gjendjen READY. Rezultatet e botit të profesorit dhe hyrja OAuth me dy llogari nuk janë pretenduar.
 
 ## Riprodhimi i testeve të izoluara
 
