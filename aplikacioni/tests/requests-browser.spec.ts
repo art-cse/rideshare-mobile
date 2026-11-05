@@ -10,7 +10,7 @@ test.describe("kërkesat reale — vetëm PostgreSQL lokal", () => {
   test.beforeAll(async ({ baseURL }) => {
     if (baseURL !== "http://localhost:3002") throw new Error("Refusing non-local test target");
     pool = new Pool({ connectionString: "postgresql://rideshare_test:local-test-only@127.0.0.1:55432/rideshare_test" });
-    for (const file of ["schema.sql", "schema-java05.sql", "migrations/001-seat-requests.sql"]) await pool.query(readFileSync(file, "utf8"));
+    for (const file of ["schema.sql", "schema-java05.sql", "migrations/001-seat-requests.sql", "migrations/002-request-location.sql"]) await pool.query(readFileSync(file, "utf8"));
   });
   test.beforeEach(async () => {
     await pool.query(`TRUNCATE kerkesat RESTART IDENTITY;
@@ -93,5 +93,34 @@ test.describe("kërkesat reale — vetëm PostgreSQL lokal", () => {
     await context.clearCookies(); await page.getByRole("button", { name: "Dërgo kërkesën reale" }).click();
     await expect(page).toHaveURL(/\/panel$/);
     expect((await pool.query("SELECT count(*)::int AS n FROM kerkesat")).rows[0].n).toBe(0);
+  });
+
+  async function locate(page: Page) {
+    await page.addInitScript(() => Object.defineProperty(navigator, "geolocation", { value: {
+      getCurrentPosition(success: PositionCallback) { success({ coords: { latitude: 0.125, longitude: 0.25, accuracy: 37 } } as GeolocationPosition); },
+    } }));
+    await page.goto("/udhetimi/1/kerko");
+    await page.getByTestId("locate-me").click();
+    await expect(page.getByRole("link", { name: "Hap vendndodhjen në Google Maps" })).toBeVisible();
+  }
+  test("submitted map link reaches only the assigned driver and survives refresh", async ({ page, context }) => {
+    await login(context, "300"); await locate(page);
+    expect((await pool.query("SELECT count(*)::int AS n FROM kerkesat")).rows[0].n).toBe(0);
+    await page.getByRole("button", { name: "Dërgo kërkesën reale" }).click();
+    await expect(page).toHaveURL(/\/kerkesat\?m=derguar$/);
+    await login(context, "100"); await page.goto("/shofer"); await page.reload();
+    await expect(page.getByRole("link", { name: "Hap vendndodhjen e takimit në Google Maps" })).toHaveAttribute("href", "https://www.google.com/maps/search/?api=1&query=0.125%2C0.25");
+    await login(context, "200"); await page.goto("/shofer");
+    await expect(page.getByRole("link", { name: "Hap vendndodhjen e takimit në Google Maps" })).toHaveCount(0);
+    expect(await tripSeats()).toBe(1);
+  });
+  test("passenger can omit the map link after obtaining a location", async ({ page, context }) => {
+    await login(context, "300"); await locate(page);
+    await page.getByRole("checkbox", { name: "Përfshi lidhjen Google Maps për shoferin" }).uncheck();
+    await page.getByRole("button", { name: "Dërgo kërkesën reale" }).click();
+    await expect(page).toHaveURL(/\/kerkesat\?m=derguar$/);
+    await login(context, "100"); await page.goto("/shofer");
+    await expect(page.getByRole("link", { name: "Hap vendndodhjen e takimit në Google Maps" })).toHaveCount(0);
+    expect((await pool.query("SELECT latitude,longitude FROM kerkesat")).rows[0]).toEqual({ latitude: null, longitude: null });
   });
 });

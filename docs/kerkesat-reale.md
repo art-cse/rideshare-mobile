@@ -7,7 +7,21 @@
 - Dërgimi krijon `pending`. Nuk ul vendet. Vetëm shoferi pronar mund të pranojë/refuzojë.
 - Pranimi ul vendet dhe kalon në `accepted` në të njëjtin transaksion. Refuzimi kalon në `rejected`; udhëtari mund të anulojë vetëm `pending`, që kalon në `cancelled`.
 - Një indeks unik pengon dy kërkesa aktive (`pending` ose `accepted`) për të njëjtin udhëtar/udhëtim. Pas refuzimit ose anulimit mund të kërkohet përsëri.
-- “Kërko vend” te rrjedha e Javës 7 mbetet simulim. Vendtakimi dhe koordinatat e Javës 8 mbeten vetëm në faqen e telefonit dhe nuk dërgohen me kërkesën reale.
+- “Kërko vend” te rrjedha e Javës 7 mbetet simulim. Vendtakimi i shkruar i Javës 8 mbetet lokal. Te formulari i kërkesës reale mund të merret vendndodhja dhe të përfshihet lidhja Google Maps për shoferin; nuk transferohet automatikisht nga faqja publike.
+
+## Lidhja Google Maps për shoferin
+
+Te detajet zgjidh “Dërgo kërkesë reale”, hyr si udhëtar dhe te formulari real shtyp “Përdor vendndodhjen time”. Pas suksesit shfaqet një hyperlink Google Maps, jo numrat e koordinatave. Nëse “Përfshi lidhjen Google Maps për shoferin” mbetet e zgjedhur, submit-i ruan pozicionin me kërkesën. Pa vendndodhje ose me opsionin e çaktivizuar, kërkesa mbetet pa hartë.
+
+Vetëm udhëtari i kërkesës dhe shoferi i caktuar i udhëtimit mund ta lexojnë pozicionin përmes aplikacionit. Shoferi sheh “Hap vendndodhjen e takimit në Google Maps” në kartën e kërkesës. Nuk dërgohet email ose mesazh jashtë aplikacionit. Lidhja hap Google Maps vetëm pas klikimit dhe nuk kërkon API key. Serveri dhe databaza kontrollojnë kufijtë numerikë; URL-ja ndërtohet nga aplikacioni me domain të fiksuar, jo nga një URL e ardhur prej klientit. Pozicioni ruhet në historikun e kërkesës edhe pas pranimit/refuzimit/anulimit.
+
+Migrimi shtesë është `aplikacioni/migrations/002-request-location.sql`, pas migrimit 001. Shton dy kolona opsionale me kufizime dhe një funksion që krijon kërkesën dhe ruan pozicionin atomikisht. U aplikua në Production më 05.11.2026 pas miratimit të veçantë. Krahasimi para/pas konfirmoi që udhëtimet, profilet dhe vlerat ekzistuese të kërkesave mbetën të pandryshuara; tabela e kërkesave ishte bosh. Kërkesat pa hartë vazhdojnë të punojnë edhe në instalime pa këtë migrim.
+
+Verifikimi i këtij zgjerimi: lint, TypeScript dhe build kaluan; 29 teste njësie kaluan (një provë me dy lidhje anashkalohet në PGlite), 21/21 teste kaluan në PostgreSQL real lokal dhe 32/32 prova browser kaluan në 375px/390px. U provuan ruajtja e pozicionit, refuzimi i koordinatave të pavlefshme, leximi vetëm nga përdoruesit e autorizuar, ruajtja pas rifreskimit dhe zgjedhja për të mos përfshirë hartën. U përdorën vetëm koordinata fiktive.
+
+Ndryshimet kryesore: `src/lib/harta.ts` ndërton lidhjen, `ZgjedhVendtakimin.tsx` e shfaq, `FormularKerkese.tsx` kontrollon përfshirjen, `src/lib/kerkesat.ts` validon dhe ruan, `PanelKerkesash.tsx` e shfaq për përdoruesit e autorizuar. API-ja publike e udhëtimeve nuk përmban pozicionin e kërkesave.
+
+Formati i linkut ndjek [Google Maps URLs](https://developers.google.com/maps/documentation/urls/get-started).
 
 ## Migrimi — aplikuar në Production me miratim
 

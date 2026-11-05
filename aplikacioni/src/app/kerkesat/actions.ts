@@ -11,7 +11,9 @@ function rifresko() {
   revalidatePath("/udhetimi/[id]/kerkesa", "page");
 }
 export async function dergoKerkesen(data: FormData) {
-  const result = await veproKerkesen("create", data.get("id"), data.get("vende"));
+  const result = await veproKerkesen("create", data.get("id"), data.get("vende"), {
+    latitude: data.get("latitude") ?? "", longitude: data.get("longitude") ?? "",
+  });
   rifresko();
   redirect(`/kerkesat?m=${encodeURIComponent(result)}`);
 }

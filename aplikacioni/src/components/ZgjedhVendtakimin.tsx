@@ -1,6 +1,7 @@
 "use client";
 
 import { useId, useState, type FormEvent } from "react";
+import { koordinataTeVlefshme, lidhjaGoogleMaps, type Koordinata } from "@/lib/harta";
 
 type Gjendja = "idle" | "loading" | "success" | "denied" | "timeout" | "unavailable";
 
@@ -13,7 +14,7 @@ const mesazhet: Record<Gjendja, string> = {
   unavailable: "Pozicioni nuk është i disponueshëm. Provo sërish ose shkruaj vendtakimin vetë.",
 };
 
-export default function ZgjedhVendtakimin() {
+export default function ZgjedhVendtakimin({ onLocationChange }: { onLocationChange?: (value: Koordinata | null) => void }) {
   const id = useId();
   const [teksti, setTeksti] = useState("");
   const [vendtakimi, setVendtakimi] = useState("");
@@ -37,6 +38,7 @@ export default function ZgjedhVendtakimin() {
   function lexoVendndodhjen() {
     setSaktesia(null);
     setKoordinatat(null);
+    onLocationChange?.(null);
     setPaMbeshtetje(false);
     if (!navigator.geolocation) {
       setPaMbeshtetje(true);
@@ -47,11 +49,12 @@ export default function ZgjedhVendtakimin() {
     try {
       navigator.geolocation.getCurrentPosition(
         position => {
-          // Koordinatat shfaqen vetëm lokalisht; nuk ruhen ose dërgohen.
+          // Asnjë dërgim këtu: formulari real i përfshin vetëm pas submit-it.
           setSaktesia(position.coords.accuracy);
           const { latitude, longitude } = position.coords;
-          if (Number.isFinite(latitude) && Number.isFinite(longitude)) {
+          if (koordinataTeVlefshme(latitude, longitude)) {
             setKoordinatat({ latitude, longitude });
+            onLocationChange?.({ latitude, longitude });
           }
           setGjendja("success");
         },
@@ -67,7 +70,7 @@ export default function ZgjedhVendtakimin() {
 
   return <section className="meeting-point" aria-labelledby={`${id}-title`}>
     <h2 id={`${id}-title`}>Zgjidh vendtakimin tënd</h2>
-    <p>Zgjedhja mbetet vetëm në këtë faqe dhe humbet pas rifreskimit. Nuk i dërgohet shoferit dhe nuk rezervon vend.</p>
+    <p>Vendtakimi i shkruar mbetet vetëm në këtë faqe dhe humbet pas rifreskimit. Nuk i dërgohet shoferit dhe nuk rezervon vend.</p>
     <form onSubmit={konfirmo}>
       <label htmlFor={`${id}-input`}>Shkruaj vendtakimin</label>
       <input id={`${id}-input`} data-testid="meeting-input" value={teksti}
@@ -86,9 +89,9 @@ export default function ZgjedhVendtakimin() {
     <p data-testid="location-accuracy" aria-live="polite">{saktesia !== null ? `Saktësia: ${saktesia} m` : ""}</p>
     <div data-testid="location-coordinates" aria-live="polite">
       {koordinatat && <>
-        <p>Gjerësia gjeografike (latitude): {koordinatat.latitude.toFixed(6)}°</p>
-        <p>Gjatësia gjeografike (longitude): {koordinatat.longitude.toFixed(6)}°</p>
-        <p>Koordinatat shfaqen vetëm në këtë faqe. Nuk ruhen dhe nuk i dërgohen shoferit.</p>
+        <a href={lidhjaGoogleMaps(koordinatat)} target="_blank" rel="noopener noreferrer">Hap vendndodhjen në Google Maps</a>
+        <p>Google Maps hapet vetëm kur shtyp lidhjen.</p>
+        {onLocationChange && <p>Kjo lidhje përfshihet vetëm kur dërgon kërkesën reale më poshtë.</p>}
       </>}
     </div>
   </section>;

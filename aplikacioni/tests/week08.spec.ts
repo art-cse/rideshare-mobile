@@ -81,8 +81,10 @@ test("5: suksesi shfaq 37 m pa konfirmuar vendtakim", async ({ page }) => {
   await expect(page.getByTestId("location-status")).toHaveAttribute("data-state", "success");
   await expect(page.getByTestId("location-status")).toContainText("Pozicioni u mor");
   await expect(page.getByTestId("location-accuracy")).toHaveText("Saktësia: 37 m");
-  await expect(page.getByTestId("location-coordinates")).toContainText("latitude): 0.125000°");
-  await expect(page.getByTestId("location-coordinates")).toContainText("longitude): 0.250000°");
+  const map = page.getByRole("link", { name: "Hap vendndodhjen në Google Maps" });
+  await expect(map).toHaveAttribute("href", "https://www.google.com/maps/search/?api=1&query=0.125%2C0.25");
+  await expect(map).toHaveAttribute("target", "_blank");
+  await expect(page.getByTestId("location-coordinates")).not.toContainText("0.125");
   await expect(page.getByTestId("confirmed-meeting")).toBeEmpty();
   await expect(page.getByTestId("locate-me")).toBeEnabled();
   await confirm(page);

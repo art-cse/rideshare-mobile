@@ -20,3 +20,4 @@ input { min-height: 44px; width: 100%; max-width: 240px; padding: 8px; font: inh
 .request-actions { display: flex; flex-wrap: wrap; gap: 12px; }
 .request-actions form { margin-top: 12px; padding: 0; border: 0; }
 .request-actions button { margin-top: 0; }
+.share-location { width: 20px; min-height: 20px; margin-right: 8px; vertical-align: middle; }

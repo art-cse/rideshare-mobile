@@ -28,7 +28,7 @@ async function request(passenger = "300", trip = "1", count = "1") {
 }
 
 beforeAll(async () => {
-  for (const file of ["schema.sql", "schema-java05.sql", "migrations/001-seat-requests.sql"]) await exec(readFileSync(file, "utf8"));
+  for (const file of ["schema.sql", "schema-java05.sql", "migrations/001-seat-requests.sql", "migrations/002-request-location.sql"]) await exec(readFileSync(file, "utf8"));
 }, 30000);
 beforeEach(async () => {
   mocks.sql.mockReset().mockImplementation(async (strings: TemplateStringsArray, ...values: unknown[]) =>
@@ -147,6 +147,37 @@ test("database constraints and repeatable migration preserve data", async () => 
 test("database failure returns feedback without claiming success", async () => {
   login("300"); mocks.sql.mockRejectedValue(new Error("unavailable"));
   expect(await veproKerkesen("create", "1", "1")).toBe("databaza");
+});
+
+test("optional location is stored atomically and visible only to passenger and assigned driver", async () => {
+  login("300");
+  expect(await veproKerkesen("create", "1", "1", { latitude: "0.125", longitude: "0.25" })).toBe("derguar");
+  expect((await lexoKerkesat())[0]).toMatchObject({ latitude: 0.125, longitude: 0.25 });
+  login("100"); expect((await lexoKerkesat())[0]).toMatchObject({ latitude: 0.125, longitude: 0.25 });
+  login("200"); expect(await lexoKerkesat()).toEqual([]);
+  login("400"); expect(await lexoKerkesat()).toEqual([]);
+  login("300");
+  expect(await veproKerkesen("create", "1", "1", { latitude: "1", longitude: "2" })).toBe("dyfish");
+  expect((await lexoKerkesat())[0]).toMatchObject({ latitude: 0.125, longitude: 0.25 });
+  expect(await seats()).toBe(1);
+});
+test("absent location stays absent; invalid or partial coordinates are rejected", async () => {
+  login("300");
+  for (const location of [
+    { latitude: "91", longitude: "0" }, { latitude: "0", longitude: "181" },
+    { latitude: "NaN", longitude: "0" }, { latitude: "Infinity", longitude: "0" },
+    { latitude: "", longitude: "0" }, { latitude: " ", longitude: "0" },
+    { latitude: "javascript:alert(1)", longitude: "0" }, { latitude: null, longitude: "0" },
+  ]) expect(await veproKerkesen("create", "1", "1", location)).toBe("vendndodhja");
+  expect(await veproKerkesen("create", "1", "1", { latitude: "", longitude: "" })).toBe("derguar");
+  expect((await lexoKerkesat())[0]).toMatchObject({ latitude: null, longitude: null });
+  await expect(query("UPDATE kerkesat SET latitude=91,longitude=0 WHERE id=1")).rejects.toThrow();
+  await expect(query("UPDATE kerkesat SET latitude=0,longitude=NULL WHERE id=1")).rejects.toThrow();
+});
+test("location migration reruns without modifying existing requests", async () => {
+  login("300"); await veproKerkesen("create", "1", "1", { latitude: "0", longitude: "0" });
+  await exec(readFileSync("migrations/002-request-location.sql", "utf8"));
+  expect((await lexoKerkesat())[0]).toMatchObject({ latitude: 0, longitude: 0, statusi: "pending" });
 });
 
 test("failure after seat update rolls back both changes", async () => {

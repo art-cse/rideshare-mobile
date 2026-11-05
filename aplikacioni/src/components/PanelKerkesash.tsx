@@ -5,6 +5,7 @@ import type { Kerkese } from "@/lib/kerkesat";
 import type { Profil } from "@/lib/lejet";
 import { etiketatStatusit, mesazhetKerkesat } from "@/lib/mesazhet-kerkesat";
 import { anuloKerkesen, pranoKerkesen, refuzoKerkesen } from "@/app/kerkesat/actions";
+import { lidhjaGoogleMaps, koordinataTeVlefshme } from "@/lib/harta";
 
 export function NavigimiPanelit({ profil }: { profil: Profil }) {
   return <><nav aria-label="Llogaria">
@@ -26,6 +27,8 @@ export function ListaKerkesave({ kerkesat, shofer = false }: { kerkesat: Kerkese
     <h3>{k.nisja} – {k.destinacioni}</h3>
     <p>Ora: {k.ora} · Vende të kërkuara: {k.vende}</p>
     {shofer && <p>Udhëtari: {k.emri}</p>}
+    {k.latitude !== null && k.longitude !== null && koordinataTeVlefshme(k.latitude, k.longitude) &&
+      <p><a href={lidhjaGoogleMaps({ latitude: k.latitude, longitude: k.longitude })} target="_blank" rel="noopener noreferrer">Hap vendndodhjen e takimit në Google Maps</a></p>}
     <p>Statusi: <strong>{etiketatStatusit[k.statusi]}</strong></p>
     <p>Dërguar: <time dateTime={new Date(k.krijuar).toISOString()}>{new Intl.DateTimeFormat("sq-AL", {
       dateStyle: "medium", timeStyle: "short", timeZone: "Europe/Budapest",

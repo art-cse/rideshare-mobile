@@ -6,9 +6,9 @@ U shtua zgjedhja lokale e vendtakimit te detajet e udhëtimit. Komponenti `Zgjed
 
 Dy vlera të pavarura `useState` ruajnë draftin dhe vendtakimin e konfirmuar. Funksioni `konfirmo` pastron tekstin me `trim()`, refuzon tekstin bosh dhe ruan zgjedhjen e mëparshme kur hyrja është e pavlefshme. Ndryshimi i draftit nuk ndryshon konfirmimin.
 
-Butoni i vendndodhjes thërret `navigator.geolocation.getCurrentPosition` vetëm pas klikimit, me `timeout: 10000`. Gjendjet janë `idle`, `loading`, `success`, `denied`, `timeout` dhe `unavailable`. Kodet 1, 2 dhe 3 kanë mesazhe të dallueshme; mungesa e API-së ka mesazhin e vet. Çdo rezultat përfundon pritjen dhe lejon riprovimin. Suksesi shfaq saktësinë në metra dhe koordinatat lokalisht, pa shpikur emër vendi dhe pa konfirmuar automatikisht vendtakim.
+Butoni i vendndodhjes thërret `navigator.geolocation.getCurrentPosition` vetëm pas klikimit, me `timeout: 10000`. Gjendjet janë `idle`, `loading`, `success`, `denied`, `timeout` dhe `unavailable`. Kodet 1, 2 dhe 3 kanë mesazhe të dallueshme; mungesa e API-së ka mesazhin e vet. Çdo rezultat përfundon pritjen dhe lejon riprovimin. Suksesi shfaq saktësinë në metra dhe lidhjen Google Maps, pa shpikur emër vendi dhe pa konfirmuar automatikisht vendtakim.
 
-Sipas kërkesës së mëvonshme të përdoruesit, pas suksesit shfaqen edhe latitude/longitude me gjashtë shifra dhjetore. Koordinatat mbeten vetëm në gjendjen e komponentit, pastrohen kur riprovohet ose rifreskohet faqja dhe nuk ruhen në Neon/localStorage, console ose shërbime të jashtme. Nuk i dërgohen Dritonit dhe nuk konfirmojnë automatikisht vendtakim. Nuk ndryshoi skema ose të dhënat e udhëtimeve për këtë zgjerim të Javës 8.
+Sipas kërkesës së mëvonshme të përdoruesit, pas suksesit shfaqet “Hap vendndodhjen në Google Maps” në vend të numrave latitude/longitude. Lidhja krijohet lokalisht; Google Maps merr pozicionin vetëm nëse hapet lidhja. Në faqen e Javës 8 dhe në detajet publike, pozicioni humbet pas rifreskimit dhe nuk ruhet në Neon/localStorage ose console. Në rrjedhën e veçantë të kërkesës reale, përdoruesi mund të marrë vendndodhjen përsëri dhe ta përfshijë me kërkesën për shoferin; mund edhe ta çaktivizojë përfshirjen. Ky veprim ruan pozicionin me kërkesën, nuk konfirmon automatikisht vendtakim dhe nuk rezervon vend.
 
 ## Provat që bëra
 

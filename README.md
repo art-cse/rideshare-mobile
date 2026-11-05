@@ -2,7 +2,7 @@
 
 ## Kërkesat reale dhe shoferi
 
-Rrjedha reale është e ndarë nga simulimi: `/kerkesat` për udhëtarin dhe `/shofer` për shoferin e caktuar në databazë. Shih [udhëzimin e aktivizimit dhe testeve](docs/kerkesat-reale.md). Migrimi `aplikacioni/migrations/001-seat-requests.sql` u aplikua në Production me miratim. Sipas zgjedhjes së përdoruesit, rolet dhe pronësia e udhëtimeve mbetën të pandryshuara; përdorimi real kërkon caktimin e një shoferi të verifikuar. Nuk ka ndryshim roli nga ndërfaqja dhe nuk ndahen koordinata me shoferin.
+Rrjedha reale është e ndarë nga simulimi: `/kerkesat` për udhëtarin dhe `/shofer` për shoferin e caktuar në databazë. Shih [udhëzimin e aktivizimit dhe testeve](docs/kerkesat-reale.md). Migrimi `aplikacioni/migrations/001-seat-requests.sql` u aplikua në Production me miratim. Sipas zgjedhjes së përdoruesit, rolet dhe pronësia e udhëtimeve mbetën të pandryshuara; përdorimi real kërkon caktimin e një shoferi të verifikuar. Nuk ka ndryshim roli nga ndërfaqja. Lidhja Google Maps mund të përfshihet nga përdoruesi me kërkesën reale; migrimi për këtë është `002-request-location.sql`.
 
 ## Java 8 — vendtakimi dhe API-ja e pajisjes
 
