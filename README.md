@@ -1,5 +1,9 @@
 # rideshare-mobile
 
+## Kërkesat reale dhe shoferi
+
+Rrjedha reale është e ndarë nga simulimi: `/kerkesat` për udhëtarin dhe `/shofer` për shoferin e caktuar në databazë. Shih [udhëzimin e aktivizimit dhe testeve](docs/kerkesat-reale.md). Migrimi `aplikacioni/migrations/001-seat-requests.sql` dhe caktimi i rolit/pronësisë në Production presin miratim; pa migrimin ndërfaqja tregon që kërkesat reale ende nuk janë aktivizuar. Nuk ka ndryshim roli nga ndërfaqja dhe nuk ndahen koordinata me shoferin.
+
 ## Java 8 — vendtakimi dhe API-ja e pajisjes
 
 Detajet e udhëtimit përfshijnë zgjedhjen lokale të vendtakimit dhe kërkesën e vendndodhjes vetëm pas klikimit. Faqja `/java-08-test` përdor të njëjtin komponent me të dhëna fiktive dhe punon pa Neon/OAuth. Raporti [java-08.md](java-08.md) përshkruan sjelljet, privatësinë, testet dhe demonstrimin personal që mbetet në pritje. Konfigurimi i kontrollit është te `mobile-week08.json`.

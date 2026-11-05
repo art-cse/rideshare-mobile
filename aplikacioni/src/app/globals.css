@@ -17,3 +17,6 @@ input { min-height: 44px; width: 100%; max-width: 240px; padding: 8px; font: inh
 .meeting-point { margin-top: 32px; border-top: 1px solid #8090aa; padding-top: 16px; }
 .meeting-point input { display: block; max-width: 100%; }
 .meeting-point [role="alert"]:empty { margin: 0; padding: 0; border: 0; }
+.request-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.request-actions form { margin-top: 12px; padding: 0; border: 0; }
+.request-actions button { margin-top: 0; }

@@ -17,5 +17,9 @@ export default async function Detajet({ params }: { params: Promise<{ id: string
     {udhetim.vende > 0 ? <Link className="action" href={`/udhetimi/${id}/kerkesa`}>Kërko vend</Link>
       : <button disabled>Nuk ka vende të lira</button>}
     <ZgjedhVendtakimin key={udhetim.id} />
+    <section><h2>Kërkesë reale me llogari</h2>
+      <p>Për kërkesë që i dërgohet shoferit, hyr si udhëtar. Veprimi “Kërko vend” më sipër mbetet simulim.</p>
+      <Link href={`/udhetimi/${encodeURIComponent(id)}/kerko`}>Dërgo kërkesë reale</Link>
+    </section>
   </main>;
 }

@@ -10,7 +10,7 @@ export default async function Home() {
   return <main><p className="eyebrow">RideShare · Laboratori AAB</p>
     <h1>Udhëtimet për AAB</h1>
     <Link href="/panel">Hyr / Paneli im</Link>
-    <p>Zgjidh nisjen dhe shiko detajet. Kërkesat për vend janë vetëm simulim.</p>
+    <p>Zgjidh nisjen dhe shiko detajet. Simulimi i Javës 7 dhe kërkesat reale me llogari janë veprime të ndara.</p>
     {udhetimet.length === 0 ? <p>Nuk ka udhëtime për momentin.</p> :
       <div className="trip-list">{udhetimet.map(u => <KartaUdhetimi key={u.id} udhetim={u} />)}</div>}
   </main>;
