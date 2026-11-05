@@ -87,4 +87,4 @@ Udhëzimi: https://arbenl.github.io/lendet/2026-2027/mobile/java-07/ushtrimet.ht
 
 ## Ndihma nga AI
 
-Codex ndihmoi me kontrollin e kërkesave, identifikimin e problemeve, ndryshimin e kodit, testet automatike, dokumentimin dhe publikimin në GitHub/Vercel. Rezultatet teknike të raportuara u kontrolluan përmes mjeteve të Codex; nuk paraqiten si prova manuale të kryera nga studenti. Parashikimi “Nuk ka vende te lira” u dha nga studenti. Shpjegimi dhe demonstrimi personal para kolegut mbeten për t'u kryer.
+Codex ndihmoi në identifikimin dhe korrigjimin e mungesës së orës së nisjes në ekranin e simulimit, si dhe në verifikimin e korrigjimit me teste automatike.
