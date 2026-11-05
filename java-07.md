@@ -87,4 +87,4 @@ Udhëzimi: https://arbenl.github.io/lendet/2026-2027/mobile/java-07/ushtrimet.ht
 
 ## Ndihma nga AI
 
-Codex ndihmoi në identifikimin dhe korrigjimin e mungesës së orës së nisjes në ekranin e simulimit, si dhe në verifikimin e korrigjimit me teste automatike.
+AI më ndihmoi me debugging gjatë zhvillimit.
