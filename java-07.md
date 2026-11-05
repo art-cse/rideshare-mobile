@@ -6,7 +6,7 @@ GitHub: art-cse
 
 Kodi: P7-107
 
-Skenari i zgjedhur: Rasti 3 — Klikim apo rezervim.
+Skenari i zgjedhur (numri dhe titulli, nga Rastet 1–5): 3 — Klikim apo rezervim.
 
 ID i udhëtimit në projektin tim: java7-p7-107 (rresht i përkohshëm vetëm për prova).
 
@@ -25,7 +25,7 @@ Pritshmëria teknike për rastin me vende: pas klikimit shfaqet “Simulim: Në 
 
 ## Korrigjimi
 
-Skedari: `aplikacioni/src/app/udhetimi/[id]/kerkesa/page.tsx`.
+Skedari: aplikacioni/src/app/udhetimi/[id]/kerkesa/page.tsx
 
 Shfaqen ID-ja, linja dhe ora nga udhëtimi i lexuar në databazë, për të dy gjendjet e vendeve. Nuk shtohet rezervim real. Testi i problemit dështoi para korrigjimit dhe kaloi pas tij në build-in e prodhimit lokal.
 
@@ -84,3 +84,7 @@ Rikontrolli i PWA-së: katër ekzekutime shtesë (dy për secilën gjerësi) kal
 U ndryshua vetëm numri i vendeve nga 3 në 0 te i njëjti rresht prove. Rezultati përputhet me parashikimin personal “Nuk ka vende te lira”. Shpjegimi 60–90 sekonda para një kolegu nuk është kryer këtu dhe mbetet për studentin. Nuk është krijuar Issue dorëzimi ose koment te repository i profesorit.
 
 Udhëzimi: https://arbenl.github.io/lendet/2026-2027/mobile/java-07/ushtrimet.html
+
+## Ndihma nga AI
+
+Codex ndihmoi me kontrollin e kërkesave, identifikimin e problemeve, ndryshimin e kodit, testet automatike, dokumentimin dhe publikimin në GitHub/Vercel. Rezultatet teknike të raportuara u kontrolluan përmes mjeteve të Codex; nuk paraqiten si prova manuale të kryera nga studenti. Parashikimi “Nuk ka vende te lira” u dha nga studenti. Shpjegimi dhe demonstrimi personal para kolegut mbeten për t'u kryer.
