@@ -1,5 +1,9 @@
 # rideshare-mobile
 
+## Java 8 — vendtakimi dhe API-ja e pajisjes
+
+Detajet e udhëtimit përfshijnë zgjedhjen lokale të vendtakimit dhe kërkesën e vendndodhjes vetëm pas klikimit. Faqja `/java-08-test` përdor të njëjtin komponent me të dhëna fiktive dhe punon pa Neon/OAuth. Raporti [java-08.md](java-08.md) përshkruan sjelljet, privatësinë, testet dhe demonstrimin personal që mbetet në pritje. Konfigurimi i kontrollit është te `mobile-week08.json`.
+
 ## Java 7 — kontrolli i MVP-së
 
 Raporti [java-07.md](java-07.md) përmban rastin P7-107, parashikimin personal, dy probleme të vëzhguara, korrigjimin e orës/identifikimit në simulim, lidhjet para/pas dhe tri prova reale. Gjashtë kontrollet në 375px/390px, nëntë testet e lejeve, lint dhe build kaluan. Shpjegimi para kolegut dhe dorëzimi si Issue mbeten për studentin. Kërkesat mbeten simulim pa rezervime reale.
