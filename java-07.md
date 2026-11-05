@@ -8,7 +8,7 @@ Kodi: P7-107
 
 Skenari i zgjedhur (numri dhe titulli, nga Rastet 1–5): 3 — Klikim apo rezervim.
 
-ID i udhëtimit në projektin tim: java7-p7-107 (rresht i përkohshëm vetëm për prova).
+ID i udhëtimit në projektin tim: java7-p7&#45;107 (rresht i përkohshëm vetëm për prova).
 
 Të dhënat fiktive të rastit: Mitrovicë → AAB, ora 10:25, 3 vende. Kodi dhe vlerat llogariten nga gjeneratori i kursit për `art-cse`. Vendtakimi i provës: Te stacioni.
 
