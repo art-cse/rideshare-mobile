@@ -6,9 +6,9 @@ U shtua zgjedhja lokale e vendtakimit te detajet e udhëtimit. Komponenti `Zgjed
 
 Dy vlera të pavarura `useState` ruajnë draftin dhe vendtakimin e konfirmuar. Funksioni `konfirmo` pastron tekstin me `trim()`, refuzon tekstin bosh dhe ruan zgjedhjen e mëparshme kur hyrja është e pavlefshme. Ndryshimi i draftit nuk ndryshon konfirmimin.
 
-Butoni i vendndodhjes thërret `navigator.geolocation.getCurrentPosition` vetëm pas klikimit, me `timeout: 10000`. Gjendjet janë `idle`, `loading`, `success`, `denied`, `timeout` dhe `unavailable`. Kodet 1, 2 dhe 3 kanë mesazhe të dallueshme; mungesa e API-së ka mesazhin e vet. Çdo rezultat përfundon pritjen dhe lejon riprovimin. Suksesi shfaq vetëm saktësinë në metra, pa shpikur emër vendi dhe pa konfirmuar automatikisht vendtakim.
+Butoni i vendndodhjes thërret `navigator.geolocation.getCurrentPosition` vetëm pas klikimit, me `timeout: 10000`. Gjendjet janë `idle`, `loading`, `success`, `denied`, `timeout` dhe `unavailable`. Kodet 1, 2 dhe 3 kanë mesazhe të dallueshme; mungesa e API-së ka mesazhin e vet. Çdo rezultat përfundon pritjen dhe lejon riprovimin. Suksesi shfaq saktësinë në metra dhe koordinatat lokalisht, pa shpikur emër vendi dhe pa konfirmuar automatikisht vendtakim.
 
-Nuk ruhen ose dërgohen koordinata. Zgjedhja është gjendje e komponentit në faqen e hapur; nuk ruhet në Neon ose localStorage dhe nuk dërgohet te Dritoni. Nuk ndryshoi skema ose të dhënat e udhëtimeve.
+Sipas kërkesës së mëvonshme të përdoruesit, pas suksesit shfaqen edhe latitude/longitude me gjashtë shifra dhjetore. Koordinatat mbeten vetëm në gjendjen e komponentit, pastrohen kur riprovohet ose rifreskohet faqja dhe nuk ruhen në Neon/localStorage, console ose shërbime të jashtme. Nuk i dërgohen Dritonit dhe nuk konfirmojnë automatikisht vendtakim. Nuk ndryshoi skema ose të dhënat e udhëtimeve për këtë zgjerim të Javës 8.
 
 ## Provat që bëra
 
@@ -36,7 +36,7 @@ Hapat: kontrollo komponentin, testet, raportin dhe ndryshimet e Git-it para publ
 
 Pritshmëria: vetëm emra fiktivë dhe saktësi e simuluar; asnjë koordinatë reale, sekret ose shkrim i vendtakimit. Lista e udhëtimeve mbetet e njëjtë.
 
-Vëzhgimi: komponenti lexon vetëm `position.coords.accuracy`; nuk lexon latitude/longitude dhe nuk përdor console, localStorage ose kërkesa rrjeti për vendndodhjen. Testi i suksesit jep vetëm objektin me accuracy 37. Konfirmimi dhe simulimi në faqen reale nuk dërguan POST ose metoda të tjera shkrimi; API publike mbeti identike. Pamja e inspektuar përmbante vetëm Biblioteka dhe udhëtimin fiktiv. Skedarët `.env`, screenshot-et dhe rezultatet lokale të testeve nuk përfshihen në commit.
+Vëzhgimi: komponenti lexon `position.coords.accuracy` dhe, pas zgjerimit të kërkuar, latitude/longitude për shfaqje lokale; nuk përdor console, localStorage ose kërkesa rrjeti për vendndodhjen. Testi përdor saktësinë 37 m dhe një pikë krejt fiktive për të kontrolluar shfaqjen e koordinatave, jo GPS personal. Konfirmimi dhe simulimi në faqen reale nuk dërguan POST ose metoda të tjera shkrimi; API publike mbeti identike. Pamja e inspektuar përmbante vetëm Biblioteka dhe udhëtimin fiktiv. Skedarët `.env`, screenshot-et dhe rezultatet lokale të testeve nuk përfshihen në commit.
 
 Kontrollet e ekzekutuara:
 

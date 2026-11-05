@@ -20,6 +20,7 @@ export default function ZgjedhVendtakimin() {
   const [gabimi, setGabimi] = useState("");
   const [gjendja, setGjendja] = useState<Gjendja>("idle");
   const [saktesia, setSaktesia] = useState<number | null>(null);
+  const [koordinatat, setKoordinatat] = useState<{ latitude: number; longitude: number } | null>(null);
   const [paMbeshtetje, setPaMbeshtetje] = useState(false);
 
   function konfirmo(event: FormEvent<HTMLFormElement>) {
@@ -35,6 +36,7 @@ export default function ZgjedhVendtakimin() {
 
   function lexoVendndodhjen() {
     setSaktesia(null);
+    setKoordinatat(null);
     setPaMbeshtetje(false);
     if (!navigator.geolocation) {
       setPaMbeshtetje(true);
@@ -45,8 +47,12 @@ export default function ZgjedhVendtakimin() {
     try {
       navigator.geolocation.getCurrentPosition(
         position => {
-          // Lexojmë vetëm saktësinë; koordinatat nuk ruhen dhe nuk dërgohen.
+          // Koordinatat shfaqen vetëm lokalisht; nuk ruhen ose dërgohen.
           setSaktesia(position.coords.accuracy);
+          const { latitude, longitude } = position.coords;
+          if (Number.isFinite(latitude) && Number.isFinite(longitude)) {
+            setKoordinatat({ latitude, longitude });
+          }
           setGjendja("success");
         },
         error => {
@@ -78,5 +84,12 @@ export default function ZgjedhVendtakimin() {
       {paMbeshtetje ? "Ky shfletues nuk e mbështet vendndodhjen. Shkruaj vendtakimin vetë." : mesazhet[gjendja]}
     </p>
     <p data-testid="location-accuracy" aria-live="polite">{saktesia !== null ? `Saktësia: ${saktesia} m` : ""}</p>
+    <div data-testid="location-coordinates" aria-live="polite">
+      {koordinatat && <>
+        <p>Gjerësia gjeografike (latitude): {koordinatat.latitude.toFixed(6)}°</p>
+        <p>Gjatësia gjeografike (longitude): {koordinatat.longitude.toFixed(6)}°</p>
+        <p>Koordinatat shfaqen vetëm në këtë faqe. Nuk ruhen dhe nuk i dërgohen shoferit.</p>
+      </>}
+    </div>
   </section>;
 }

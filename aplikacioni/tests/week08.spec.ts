@@ -18,8 +18,8 @@ async function mockLocation(page: Page) {
       getCurrentPosition(success: PositionCallback, error: PositionErrorCallback, options?: PositionOptions) {
         window.week08Geo.calls++;
         window.week08Geo.timeout = options?.timeout;
-        // Fictional accuracy only: the component must not need coordinates.
-        window.week08Geo.succeed = accuracy => success({ coords: { accuracy } } as GeolocationPosition);
+        // Entirely fictional point for display tests; never use personal GPS data.
+        window.week08Geo.succeed = accuracy => success({ coords: { accuracy, latitude: 0.125, longitude: 0.25 } } as GeolocationPosition);
         window.week08Geo.fail = code => error({ code } as GeolocationPositionError);
       },
     } });
@@ -81,11 +81,14 @@ test("5: suksesi shfaq 37 m pa konfirmuar vendtakim", async ({ page }) => {
   await expect(page.getByTestId("location-status")).toHaveAttribute("data-state", "success");
   await expect(page.getByTestId("location-status")).toContainText("Pozicioni u mor");
   await expect(page.getByTestId("location-accuracy")).toHaveText("Saktësia: 37 m");
+  await expect(page.getByTestId("location-coordinates")).toContainText("latitude): 0.125000°");
+  await expect(page.getByTestId("location-coordinates")).toContainText("longitude): 0.250000°");
   await expect(page.getByTestId("confirmed-meeting")).toBeEmpty();
   await expect(page.getByTestId("locate-me")).toBeEnabled();
   await confirm(page);
   await page.getByTestId("locate-me").click();
   await expect(page.getByTestId("location-accuracy")).toBeEmpty();
+  await expect(page.getByTestId("location-coordinates")).toBeEmpty();
   await page.evaluate(() => window.week08Geo.fail(1));
   await expect(page.getByTestId("confirmed-meeting")).toHaveText("Biblioteka");
 });
@@ -132,4 +135,5 @@ test("kodi 2 dhe rifreskimi: manualja punon, gjendja nuk ruhet", async ({ page }
   await page.reload();
   await expect(page.getByTestId("confirmed-meeting")).toBeEmpty();
   await expect(page.getByTestId("meeting-input")).toHaveValue("");
+  await expect(page.getByTestId("location-coordinates")).toBeEmpty();
 });
