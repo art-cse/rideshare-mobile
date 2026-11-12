@@ -14,7 +14,7 @@ export function NavigimiPanelit({ profil }: { profil: Profil }) {
       <Link href="/shofer#udhetimet">Udhëtimet e mia</Link>{" · "}<Link href="/shofer#pritje">Kërkesat në pritje</Link></>
       : <Link href="/kerkesat">Kërkesat e mia</Link>}
   </nav><p>{profil.emri} · {profil.roli === "shofer" ? "Shofer" : "Udhëtar"}</p>
-    <p>ID ime GitHub: <code>{profil.id}</code></p><Hyrja brenda />
+    {!profil.id.startsWith("local:") && <p>ID ime GitHub: <code>{profil.id}</code></p>}<Hyrja brenda />
   </>;
 }
 export function MesazhKerkese({ value }: { value?: string | string[] }) {
