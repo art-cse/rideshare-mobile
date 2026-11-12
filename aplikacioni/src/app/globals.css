@@ -24,3 +24,11 @@ input { min-height: 44px; width: 100%; max-width: 240px; padding: 8px; font: inh
 summary { cursor: pointer; min-height: 44px; padding: 10px 0; }
 summary:focus-visible { outline: 3px solid #ffd166; outline-offset: 4px; }
 input[type="checkbox"] { width: 20px; min-height: 20px; margin-right: 8px; vertical-align: middle; }
+.local-login { display: grid; gap: 20px; }
+.local-login h2, .local-login [role="alert"] { margin: 0; }
+.login-field { display: grid; gap: 8px; min-width: 0; }
+.local-login input { max-width: none; min-width: 0; }
+.password-controls { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; align-items: stretch; }
+.local-login button { margin-top: 0; }
+.password-toggle { background: #293956; border: 1px solid #8090aa; }
+.login-submit { width: 100%; }
