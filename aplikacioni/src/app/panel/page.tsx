@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import Hyrja from "@/components/Hyrja";
+import HyrjaLokale from "@/components/HyrjaLokale";
 import { profiliIm } from "@/lib/lejet";
 export const dynamic = "force-dynamic";
 const mesazhet: Record<string, string> = {
@@ -22,7 +23,8 @@ export default async function Panel({ searchParams }: {
   const mesazh = typeof m === "string" && Object.hasOwn(mesazhet, m) ? mesazhet[m] : null;
   return <main><Link href="/">← Kthehu te lista</Link><h1>Paneli im</h1>
     {mesazh && <p role="status">{mesazh}</p>}
-    <p>Lista është publike. Për panelin hyr me llogarinë tënde GitHub.</p>
+    <p>Lista është publike. Për panelin hyr me përdoruesin tënd ose me GitHub.</p>
+    <HyrjaLokale />
     <Hyrja brenda={false} />
     <p>Pas hyrjes hapet paneli sipas rolit të caktuar në server. Kërkesat reale janë të ndara nga simulimi i Javës 7.</p>
   </main>;

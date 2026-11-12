@@ -17,7 +17,8 @@ test("lista dhe paneli hapen publikisht në telefon", async ({ page }, testInfo)
     await page.screenshot({ path: testInfo.outputPath(`${path.replaceAll("/", "-") || "home"}.png`), fullPage: true });
   }
   await expect(page.getByRole("button", { name: "Hyr me GitHub" })).toBeVisible();
-  await expect(page.locator("form")).toHaveCount(0);
+  await expect(page.getByRole("form", { name: "Hyr me përdorues" })).toBeVisible();
+  await expect(page.locator('input[name="operation"]')).toHaveCount(0);
   await page.getByRole("link", { name: /Kthehu te lista/ }).click();
   await expect(page.locator(".trip-card")).toHaveCount(3);
   expect(errors).toEqual([]);

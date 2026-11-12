@@ -1,3 +1,7 @@
+# Përditësim më 12 nëntor 2026
+
+Tani mbështeten edhe llogaritë lokale me përdorues/fjalëkalim. Migrimi 003 dhe caktimi i kërkuar i shoferëve janë aplikuar; udhëzimet e mëposhtme për mungesën e shoferit pasqyrojnë gjendjen e mëparshme. Shih [udhëzimin aktual](llogarite-dhe-java09.md) për `dreni`, `lira`, `arta`, menaxhimin e udhëtimeve dhe Javën 9. `art-cse` mbetet udhëtar.
+
 # Kërkesat reale dhe paneli i shoferit
 
 ## Rrjedha

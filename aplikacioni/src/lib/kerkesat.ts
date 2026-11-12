@@ -64,8 +64,8 @@ export async function lexoKerkesat() : Promise<Kerkese[]> {
 export async function udhetimetEShoferit() {
   const p = await profiliIm();
   if (!p || p.roli !== "shofer") throw new Error("ndaluar");
-  const rows = await getSql()`SELECT u.id, u.nisja, u.destinacioni, u.ora, u.vende
+  const rows = await getSql()`SELECT u.id, u.nisja, u.destinacioni, u.ora, u.vende, u.vendtakimi, COALESCE(to_jsonb(u)->>'version','0') AS version
     FROM udhetimet u JOIN profilet p ON p.github_id = u.shofer_id
-    WHERE p.github_id = ${p.id} AND p.roli = 'shofer' ORDER BY u.id`;
-  return rows as {id: string; nisja: string; destinacioni: string; ora: string; vende: number}[];
+    WHERE p.github_id = ${p.id} AND p.roli = 'shofer' AND (to_jsonb(u)->>'aktiv') IS DISTINCT FROM 'false' ORDER BY u.id`;
+  return rows as {id: string; nisja: string; destinacioni: string; ora: string; vendtakimi: string; vende: number; version: string}[];
 }

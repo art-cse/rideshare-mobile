@@ -9,7 +9,8 @@ test("pa Neon: gabimi është i qartë; paneli publik kërkon hyrje", async ({ p
   }
   await page.goto("/panel");
   await expect(page.getByRole("button", { name: "Hyr me GitHub" })).toBeVisible();
-  await expect(page.locator("form")).toHaveCount(0);
+  await expect(page.getByRole("form", { name: "Hyr me përdorues" })).toBeVisible();
+  await expect(page.locator('input[name="operation"]')).toHaveCount(0);
   await page.goto("/panel?m=ndaluar");
   await expect(page.getByRole("status")).toContainText("Nuk ke leje");
   await page.goto("/panel?m=toString");

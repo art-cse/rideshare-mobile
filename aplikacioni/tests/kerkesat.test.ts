@@ -28,7 +28,7 @@ async function request(passenger = "300", trip = "1", count = "1") {
 }
 
 beforeAll(async () => {
-  for (const file of ["schema.sql", "schema-java05.sql", "migrations/001-seat-requests.sql", "migrations/002-request-location.sql"]) await exec(readFileSync(file, "utf8"));
+  for (const file of ["schema.sql", "schema-java05.sql", "migrations/001-seat-requests.sql", "migrations/002-request-location.sql", "migrations/003-accounts-trips-favorites.sql"]) await exec(readFileSync(file, "utf8"));
 }, 30000);
 beforeEach(async () => {
   mocks.sql.mockReset().mockImplementation(async (strings: TemplateStringsArray, ...values: unknown[]) =>

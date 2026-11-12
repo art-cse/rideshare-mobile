@@ -1,8 +1,14 @@
+# Java 9 dhe llogaritë e shoferëve
+
+Preferimet personale janë te detajet e udhëtimit: ylli/numri ndryshojnë menjëherë, serveri konfirmon ruajtjen, gabimi rikthen pamjen dhe rifreskimi rilexon Neon. [Raporti i Javës 9](java-09.md).
+
+Hyrja me përdorues/fjalëkalim është te `/panel`; shoferët mund të shtojnë, ndryshojnë dhe heqin udhëtimet e veta dhe të pranojnë pasagjerë. [Llogaritë, kufizimet dhe provat](docs/llogarite-dhe-java09.md). Udhëtari mund t'i ndajë shoferit lidhjen Google Maps në kërkesën reale.
+
 # rideshare-mobile
 
 ## Kërkesat reale dhe shoferi
 
-Rrjedha reale është e ndarë nga simulimi: `/kerkesat` për udhëtarin dhe `/shofer` për shoferin e caktuar në databazë. Shih [udhëzimin e aktivizimit dhe testeve](docs/kerkesat-reale.md). Migrimi `aplikacioni/migrations/001-seat-requests.sql` u aplikua në Production me miratim. Sipas zgjedhjes së përdoruesit, rolet dhe pronësia e udhëtimeve mbetën të pandryshuara; përdorimi real kërkon caktimin e një shoferi të verifikuar. Nuk ka ndryshim roli nga ndërfaqja. Lidhja Google Maps mund të përfshihet nga përdoruesi me kërkesën reale; migrimi për këtë është `002-request-location.sql`.
+Rrjedha reale është e ndarë nga simulimi: `/kerkesat` për udhëtarin dhe `/shofer` për shoferin. Migrimet 001–003 janë aplikuar në Neon. Me kërkesën e re janë krijuar shoferët lokalë `dreni` (udhëtimet 1, 3), `lira` (udhëtimi 2) dhe udhëtarja `arta`; `art-cse` mbetet udhëtar. Shih [udhëzimin aktual të llogarive dhe Javës 9](docs/llogarite-dhe-java09.md). Lidhja Google Maps mund të përfshihet me kërkesën reale dhe shfaqet si lidhje e klikueshme për shoferin përkatës. Nuk ka ndryshim roli nga ndërfaqja.
 
 ## Java 8 — vendtakimi dhe API-ja e pajisjes
 

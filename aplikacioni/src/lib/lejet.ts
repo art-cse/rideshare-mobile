@@ -2,6 +2,7 @@ import "server-only";
 import { getServerSession } from "next-auth";
 import { authOptions } from "./auth";
 import { getSql } from "./db";
+import { validIdentity } from "./identity";
 
 export type Profil = { id: string; emri: string; roli: "udhetar" | "shofer" };
 export type Rezultat = "hyr" | "ndaluar" | "fushe" | "ruajtur" | "databaza";
@@ -9,8 +10,13 @@ export type Rezultat = "hyr" | "ndaluar" | "fushe" | "ruajtur" | "databaza";
 export async function profiliIm(): Promise<Profil | null> {
   const session = await getServerSession(authOptions);
   const id = session?.user?.id;
-  if (!id || !/^\d+$/.test(id)) return null;
+  if (!id || !validIdentity(id)) return null;
   const sql = getSql();
+  if (id.startsWith("local:")) {
+    const rows = await sql`SELECT p.github_id AS id, p.emri, p.roli FROM profilet p
+      JOIN local_accounts a ON a.profile_id = p.github_id WHERE p.github_id = ${id} AND NOT a.disabled`;
+    return (rows[0] as Profil | undefined) ?? null;
+  }
   // Identiteti vjen vetëm nga sesioni; profili i ri fillon si udhëtar.
   await sql`INSERT INTO profilet (github_id, emri) VALUES (${id}, ${session.user.name ?? "Student"})
     ON CONFLICT (github_id) DO NOTHING`;

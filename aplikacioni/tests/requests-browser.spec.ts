@@ -10,7 +10,7 @@ test.describe("kërkesat reale — vetëm PostgreSQL lokal", () => {
   test.beforeAll(async ({ baseURL }) => {
     if (baseURL !== "http://localhost:3002") throw new Error("Refusing non-local test target");
     pool = new Pool({ connectionString: "postgresql://rideshare_test:local-test-only@127.0.0.1:55432/rideshare_test" });
-    for (const file of ["schema.sql", "schema-java05.sql", "migrations/001-seat-requests.sql", "migrations/002-request-location.sql"]) await pool.query(readFileSync(file, "utf8"));
+    for (const file of ["schema.sql", "schema-java05.sql", "migrations/001-seat-requests.sql", "migrations/002-request-location.sql", "migrations/003-accounts-trips-favorites.sql"]) await pool.query(readFileSync(file, "utf8"));
   });
   test.beforeEach(async () => {
     await pool.query(`TRUNCATE kerkesat RESTART IDENTITY;
@@ -81,7 +81,10 @@ test.describe("kërkesat reale — vetëm PostgreSQL lokal", () => {
     await login(context, "200"); await page.goto("/shofer");
     await expect(page.locator("[data-request-id='1']")).toHaveCount(0);
     const form = page.locator("[data-request-id='2'] form").first();
-    await form.locator('input[name="id"]').evaluate((input: HTMLInputElement) => { input.value = "1"; });
+    // Mutate at submit time so hydration cannot restore the original hidden value first.
+    await form.evaluate(element => element.addEventListener("submit", () => {
+      (element.querySelector('input[name="id"]') as HTMLInputElement).value = "1";
+    }, { capture: true }));
     await form.getByRole("button", { name: "Prano kërkesën" }).click();
     await expect(page.getByRole("status")).toContainText("Nuk ke leje");
     expect(await tripSeats()).toBe(1);
