@@ -27,6 +27,8 @@ Gjatë pritjes u provuan klikime të tjera: butoni i bllokuar nisi vetëm një P
 - Repository: https://github.com/art-cse/rideshare-mobile
 
 ## Çfarë mbetet për përmirësim
+Për demonstrimin në klasë, ruajtja nga API-ja ka një vonesë të qëllimshme 15 sekonda para shkrimit në databazë. Gjatë saj shfaqet “Po presim konfirmimin e serverit.” dhe butoni mbetet joaktiv. Kjo është vonesë demonstrimi, jo matje e shpejtësisë së Neon-it; mund të hiqet pas demonstrimit.
+
 Heqja e preferimit është zgjerim opsional dhe nuk është zbatuar. Nëse lidhja ndërpritet pasi serveri e ruan preferimin, klienti mund të mos marrë konfirmimin; rifreskimi ose riprovimi e pajton gjendjen pa krijuar kopje. Prova manuale nga studenti dhe shpjegimi me kolegun mbeten për t'u bërë. Nuk është dërguar Issue apo koment te profesori.
 
 ## Ndihma nga AI (Artificial Intelligence – inteligjencë artificiale)

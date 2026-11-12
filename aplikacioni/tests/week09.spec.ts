@@ -1,9 +1,11 @@
-import { test, expect, type Page } from "@playwright/test";
+import { test, expect as baseExpect, type Page } from "@playwright/test";
 import { Pool } from "pg";
 import { readFileSync } from "node:fs";
 import { hashPassword } from "../src/lib/password";
 const driver = "local:11111111-1111-4111-8111-111111111111";
 const passenger = "local:22222222-2222-4222-8222-222222222222";
+const expect = baseExpect.configure({ timeout: 25_000 });
+test.setTimeout(90_000);
 test.describe("Week 9 and local accounts — isolated PostgreSQL", () => {
   test.skip(process.env.RIDESHARE_LOCAL_POSTGRES !== "1", "Local database required");
   test.describe.configure({ mode: "serial" });
@@ -42,8 +44,9 @@ test.describe("Week 9 and local accounts — isolated PostgreSQL", () => {
     await expect(page.getByTestId("favorites-count")).toHaveText("1");
     await expect(page.getByText("Po presim konfirmimin e serverit.")).toBeVisible();
     await page.getByRole("button",{name:"★ Po ruhet…"}).evaluate((b: HTMLButtonElement) => {b.click();b.click();});
-    expect(posts).toBe(1); release();
+    expect(posts).toBe(1); const started = Date.now(); release();
     await expect(page.getByText("U ruajt te të preferuarat.")).toBeVisible();
+    expect(Date.now() - started).toBeGreaterThanOrEqual(15_000);
     await page.reload(); await expect(page.getByRole("button",{name:"★ I ruajtur"})).toBeDisabled();
     const results=await page.evaluate(async () => Promise.all([1,2,3].map(async () => (await fetch('/api/preferimet',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:'1',perdoruesi_id:'forged'})})).status)));
     expect(results).toEqual([200,200,200]);
