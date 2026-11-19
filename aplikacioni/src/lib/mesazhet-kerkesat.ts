@@ -8,7 +8,7 @@ export const mesazhetKerkesat: Record<string, string> = {
   pa_vende: "Nuk ka vende të lira.",
   dyfish: "Ke tashmë një kërkesë aktive për këtë udhëtim.",
   perfunduar: "Kjo kërkesë është përfunduar. Vendet nuk u ndryshuan përsëri.",
-  derguar: "Kërkesa u dërgua. Prit miratimin e shoferit; ende nuk është rezervuar vend.",
+  derguar: "Kërkesa u dërgua. Statusi aktual më poshtë përditësohet nga serveri.",
   pranuar: "Kërkesa u pranua dhe vendet u përditësuan.",
   refuzuar: "Kërkesa u refuzua. Vendet nuk ndryshuan.",
   anuluar: "Kërkesa në pritje u anulua.",
@@ -16,4 +16,4 @@ export const mesazhetKerkesat: Record<string, string> = {
   jo_gati: "Kërkesat reale ende nuk janë aktivizuar. Provo më vonë.",
   ruajtur: "Ora u ruajt me sukses.",
 };
-export const etiketatStatusit = { pending: "Në pritje", accepted: "Pranuar", rejected: "Refuzuar", cancelled: "Anuluar" };
+export const etiketatStatusit = { pending: "Në pritje", accepted: "U pranua", rejected: "Refuzuar", cancelled: "Anuluar" };

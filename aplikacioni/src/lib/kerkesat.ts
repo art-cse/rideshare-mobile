@@ -6,7 +6,7 @@ import { koordinataTeVlefshme } from "./harta";
 export type Statusi = "pending" | "accepted" | "rejected" | "cancelled";
 export type Kerkese = {
   id: string; udhetimi_id: string; emri: string; nisja: string; destinacioni: string;
-  ora: string; vende: number; statusi: Statusi; krijuar: string; latitude: number | null; longitude: number | null;
+  ora: string; vende: number; vende_lira: number; statusi: Statusi; krijuar: string; latitude: number | null; longitude: number | null;
 };
 export type Veprim = "create" | "accept" | "reject" | "cancel";
 
@@ -49,7 +49,7 @@ export async function lexoKerkesat() : Promise<Kerkese[]> {
   const p = await profiliIm();
   if (!p) throw new Error("hyr");
   const rows = await getSql()`SELECT k.id::text, k.udhetimi_id, p.emri,
-    u.nisja, u.destinacioni, u.ora, k.vende, k.statusi, k.krijuar::text,
+    u.nisja, u.destinacioni, u.ora, k.vende, u.vende AS vende_lira, k.statusi, k.krijuar::text,
     (to_jsonb(k)->>'latitude')::double precision AS latitude,
     (to_jsonb(k)->>'longitude')::double precision AS longitude
     FROM kerkesat k JOIN udhetimet u ON u.id = k.udhetimi_id

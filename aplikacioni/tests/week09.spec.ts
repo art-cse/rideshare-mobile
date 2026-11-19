@@ -102,7 +102,7 @@ test.describe("Week 9 and local accounts — isolated PostgreSQL", () => {
     await login(page,"driver_test");
     await expect(page.getByRole("link",{name:/Google Maps/})).toHaveAttribute("href","https://www.google.com/maps/search/?api=1&query=0.125%2C0.25");
     await page.getByRole("button",{name:"Prano kërkesën"}).click();
-    await expect(page.locator('[data-request-id="1"]')).toContainText("Pranuar");
+    await expect(page.locator('[data-request-id="1"]')).toContainText("U pranua");
     expect((await pool.query("SELECT vende FROM udhetimet WHERE id='1'")).rows[0].vende).toBe(1);
   });
 });

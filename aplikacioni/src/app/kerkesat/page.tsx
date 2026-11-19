@@ -1,8 +1,10 @@
 import { redirect } from "next/navigation";
 import { profiliIm } from "@/lib/lejet";
-import { kerkesatGati, lexoKerkesat } from "@/lib/kerkesat";
+import { kerkesatGati } from "@/lib/kerkesat";
+import { lexoGjendjen } from "@/lib/gjendja";
+import PanelGjalle from "@/components/PanelGjalle";
 import { GabimDatabaze } from "@/components/GabimDatabaze";
-import { ListaKerkesave, MesazhKerkese, NavigimiPanelit } from "@/components/PanelKerkesash";
+import { MesazhKerkese } from "@/components/PanelKerkesash";
 
 export const dynamic = "force-dynamic";
 export default async function Kerkesat({ searchParams }: { searchParams: Promise<{m?: string | string[]}> }) {
@@ -14,10 +16,10 @@ export default async function Kerkesat({ searchParams }: { searchParams: Promise
   let gati, rows;
   try {
     gati = await kerkesatGati();
-    rows = gati ? await lexoKerkesat() : [];
+    rows = gati ? await lexoGjendjen() : null;
   } catch { return <GabimDatabaze />; }
-  return <main><NavigimiPanelit profil={p} /><h1>Kërkesat e mia</h1><MesazhKerkese value={m} />
+  return <main><h1>Kërkesat e mia</h1><MesazhKerkese value={m} />
       <p>Vetëm pranimi nga shoferi rezervon vendet. Kërkesat në pritje mund të anulohen.</p>
-      {gati ? <ListaKerkesave kerkesat={rows} /> : <MesazhKerkese value="jo_gati" />}
+      {gati && rows ? <PanelGjalle key={JSON.stringify(rows)} initial={rows} /> : <MesazhKerkese value="jo_gati" />}
     </main>;
 }

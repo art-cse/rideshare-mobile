@@ -56,15 +56,17 @@ test.describe("kërkesat reale — vetëm PostgreSQL lokal", () => {
     await expect(page.getByRole("button", { name: "Prano kërkesën" })).toHaveCount(0);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     await login(context, "300"); await page.goto("/kerkesat"); await page.reload();
-    await expect(page.locator("[data-request-id='1']")).toContainText("Pranuar");
+    await expect(page.locator("[data-request-id='1']")).toContainText("U pranua");
     await expect(page.getByRole("button", { name: "Anulo kërkesën" })).toHaveCount(0);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   });
 
   test("duplicate, rejection and cancellation keep counts correct", async ({ page, context }) => {
     await login(context, "300"); await create(page);
-    await page.goto("/udhetimi/1/kerko"); await page.getByRole("button", { name: "Dërgo kërkesën reale" }).click();
-    await expect(page.getByRole("status")).toContainText("Ke tashmë një kërkesë aktive");
+    await page.goto("/udhetimi/1/kerko");
+    await expect(page.locator('[data-request-id="1"]')).toContainText("Në pritje");
+    await expect(page.getByRole("button", { name: "Dërgo kërkesën reale" })).toHaveCount(0);
+    expect((await pool.query("SELECT rideshare_request_action('300','create','1',NULL,1) AS result")).rows[0].result).toBe("dyfish");
     await login(context, "100"); await page.goto("/shofer"); await page.getByRole("button", { name: "Refuzo kërkesën" }).click();
     await expect(page.locator("[data-request-id='1']")).toContainText("Refuzuar"); expect(await tripSeats()).toBe(1);
     await login(context, "300"); await create(page);
@@ -91,10 +93,11 @@ test.describe("kërkesat reale — vetëm PostgreSQL lokal", () => {
     expect((await pool.query("SELECT statusi FROM kerkesat WHERE id=1")).rows[0].statusi).toBe("pending");
   });
 
-  test("session lost before submit cannot create request", async ({ page, context }) => {
+  test("session lost before submit hides private controls and cannot create request", async ({ page, context }) => {
     await login(context, "300"); await page.goto("/udhetimi/1/kerko");
-    await context.clearCookies(); await page.getByRole("button", { name: "Dërgo kërkesën reale" }).click();
-    await expect(page).toHaveURL(/\/panel$/);
+    await context.clearCookies();
+    await expect(page.getByText("Sesioni ndryshoi ose përfundoi.", { exact: false })).toBeVisible({ timeout: 15000 });
+    await expect(page.getByRole("button", { name: "Dërgo kërkesën reale" })).toHaveCount(0);
     expect((await pool.query("SELECT count(*)::int AS n FROM kerkesat")).rows[0].n).toBe(0);
   });
 

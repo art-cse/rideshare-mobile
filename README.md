@@ -1,3 +1,7 @@
+# Java 10 — dy ekrane, një gjendje
+
+Paneli i shoferit, kërkesat e udhëtarit dhe faqja e kërkesës reale sinkronizohen nga Neon afërsisht çdo 5 sekonda. Në ndërprerje ruhet pamja e fundit me “Po rilidhemi”, veprimet bllokohen dhe rilidhja merr gjendjen e re pa Refresh. API-ja private është `/api/gjendja`; pranimi atomik ripërdor funksionin ekzistues SQL. Nuk ka migrim të ri. [Raporti dhe tri provat e Javës 10](java-10.md). Dorëzimi i kësaj jave te profesori mbetet për studentin.
+
 # Java 9 dhe llogaritë e shoferëve
 
 Preferimet personale janë te detajet e udhëtimit: ylli/numri ndryshojnë menjëherë, serveri konfirmon ruajtjen, gabimi rikthen pamjen dhe rifreskimi rilexon Neon. [Raporti i Javës 9](java-09.md).

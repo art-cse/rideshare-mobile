@@ -26,6 +26,7 @@ export function ListaKerkesave({ kerkesat, shofer = false }: { kerkesat: Kerkese
   return <div className="trip-list">{kerkesat.map(k => <article className="trip-card" key={k.id} data-request-id={k.id}>
     <h3>{k.nisja} – {k.destinacioni}</h3>
     <p>Ora: {k.ora} · Vende të kërkuara: {k.vende}</p>
+    <p>Vende të lira: <strong data-testid="remaining-seats">{k.vende_lira}</strong></p>
     {shofer && <p>Udhëtari: {k.emri}</p>}
     {k.latitude !== null && k.longitude !== null && koordinataTeVlefshme(k.latitude, k.longitude) &&
       <p><a href={lidhjaGoogleMaps({ latitude: k.latitude, longitude: k.longitude })} target="_blank" rel="noopener noreferrer">Hap vendndodhjen e takimit në Google Maps</a></p>}
